@@ -1,0 +1,2014 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="إلمام — منظومة تعليمية عربية للدرس الحي: تطبيق أستاذ وتطبيق تلميذ. الجدول، التنبيه، باب الدخول، الحضور في مكان واحد.">
+<title>إلمام — الأداة الأهم للدرس الحي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============ نظام التصميم ============ */
+:root{
+  --primary:#0B7A8C;
+  --primary-2:#12A5B8;
+  --deep:#053E4B;
+  --deep-2:#08323C;
+  --ink:#0E2A32;
+  --muted:#5D7A82;
+  --bg:#F4FAFB;
+  --bg-2:#EAF4F6;
+  --card:#FFFFFF;
+  --line:#D8E9ED;
+  --success:#16A96F;
+  --success-bg:#E3F6EE;
+  --wait:#E89B00;
+  --wait-bg:#FCF1DA;
+  --danger:#E24A52;
+  --danger-bg:#FCE7E8;
+  --accent:#FF7A45;
+  --radius:22px;
+  --shadow-sm:0 4px 14px rgba(5,62,75,.07);
+  --shadow-md:0 14px 40px rgba(5,62,75,.11);
+  --shadow-lg:0 30px 80px rgba(5,62,75,.18);
+  --grad:linear-gradient(135deg,var(--primary),var(--primary-2));
+  --grad-deep:linear-gradient(135deg,var(--deep),var(--deep-2));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"Tajawal","Cairo",system-ui,sans-serif;line-height:1.85;overflow-x:hidden}
+h1,h2,h3,h4,.font-cairo{font-family:"Cairo","Tajawal",sans-serif}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+.container{width:min(1180px,92%);margin-inline:auto}
+::selection{background:rgba(11,122,140,.18)}
+:focus-visible{outline:3px solid rgba(18,165,184,.55);outline-offset:3px;border-radius:8px}
+
+/* ============ الشعارات (SVG) ============ */
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:46px;height:46px;border-radius:15px;background:var(--grad);display:grid;place-items:center;box-shadow:0 8px 24px rgba(11,122,140,.35);position:relative;overflow:hidden}
+.brand-mark::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 55%)}
+.brand-mark svg{position:relative;z-index:1}
+.brand-name{font-size:26px;font-weight:900;letter-spacing:-.5px;color:var(--deep)}
+.brand-name b{color:var(--primary)}
+.app-mark{width:100%;height:100%;border-radius:38%;overflow:hidden}
+
+/* أزرار */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 26px;border-radius:16px;border:0;font-family:"Cairo",sans-serif;font-weight:800;font-size:15.5px;cursor:pointer;transition:.28s cubic-bezier(.22,.8,.36,1);white-space:nowrap}
+.btn svg{flex:none}
+.btn.primary{background:var(--grad);color:#fff;box-shadow:0 12px 30px rgba(11,122,140,.34)}
+.btn.primary:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(11,122,140,.42)}
+.btn.ghost{background:var(--card);color:var(--deep);border:1.5px solid var(--line);box-shadow:var(--shadow-sm)}
+.btn.ghost:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-3px)}
+.btn.dark{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.btn.dark:hover{background:rgba(255,255,255,.2);transform:translateY(-3px)}
+
+/* ============ الشريط العلوي ============ */
+.nav{position:sticky;top:0;z-index:60;transition:.3s}
+.nav .bar{background:rgba(244,250,251,.78);backdrop-filter:blur(18px);border-bottom:1px solid transparent}
+.nav.scrolled .bar{border-bottom-color:var(--line);background:rgba(244,250,251,.9)}
+.navin{height:80px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.links{display:flex;gap:30px;font-family:"Cairo",sans-serif;font-size:15px;font-weight:700;color:var(--muted)}
+.links a{position:relative;padding:6px 2px;transition:color .2s}
+.links a::after{content:"";position:absolute;right:2px;bottom:0;width:0;height:2.5px;border-radius:99px;background:var(--grad);transition:width .3s}
+.links a:hover{color:var(--deep)}
+.links a:hover::after{width:calc(100% - 4px)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.hamburger{display:none;background:none;border:1.5px solid var(--line);border-radius:12px;width:44px;height:44px;place-items:center;cursor:pointer;color:var(--deep)}
+.mobile-menu{display:none;flex-direction:column;gap:4px;padding:14px 22px 20px;background:rgba(244,250,251,.97);border-bottom:1px solid var(--line)}
+.mobile-menu a{padding:11px 6px;font-family:"Cairo",sans-serif;font-weight:700;color:var(--deep);border-bottom:1px dashed var(--line)}
+.mobile-menu a:last-child{border:0}
+
+/* ============ الواجهة (Hero) ============ */
+.hero{position:relative;padding:84px 0 96px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-260px auto auto -160px;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(18,165,184,.16),transparent 62%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:auto -200px -280px auto;width:720px;height:720px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,69,.13),transparent 60%);pointer-events:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:56px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:"Cairo",sans-serif;font-weight:800;font-size:13px;color:var(--primary);background:rgba(11,122,140,.1);border:1px solid rgba(11,122,140,.22);padding:7px 15px;border-radius:999px}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 0 rgba(11,122,140,.45);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(11,122,140,.4)}70%{box-shadow:0 0 0 10px rgba(11,122,140,0)}100%{box-shadow:0 0 0 0 rgba(11,122,140,0)}}
+.hero h1{font-size:clamp(42px,5.6vw,76px);line-height:1.22;font-weight:900;letter-spacing:-2.2px;margin:22px 0 20px}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:19px;max-width:540px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin:32px 0 22px}
+.platform-note{display:inline-flex;align-items:center;gap:10px;font-weight:600;color:var(--muted);font-size:13.5px}
+.platform-note .os{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;box-shadow:var(--shadow-sm)}
+.platform-note svg{width:16px;height:16px}
+
+/* أبراج الموكب (الهاتفان) */
+.stage{position:relative;perspective:1400px;min-height:540px}
+.stage .glow{position:absolute;inset:8% 4% 0;background:radial-gradient(circle at 50% 30%,rgba(11,122,140,.22),transparent 65%);filter:blur(28px);z-index:0}
+.phone{position:absolute;width:282px;border-radius:38px;background:linear-gradient(160deg,#ffffff,#eef7f9);border:1.5px solid var(--line);box-shadow:var(--shadow-lg);overflow:hidden;z-index:2;transition:transform .8s cubic-bezier(.22,.8,.36,1)}
+.phone .bar{height:26px;display:flex;align-items:center;justify-content:center;position:relative}
+.phone .bar .notch{width:96px;height:18px;border-radius:999px;background:var(--deep)}
+.phone .screen{padding:8px 18px 20px}
+.phone-student{left:38%;top:0;transform:rotate(3deg) translateZ(0)}
+.phone-teacher{right:6%;top:120px;transform:rotate(-5deg) translateZ(-60px);z-index:1}
+.phone .app-top{display:flex;align-items:center;gap:8px;margin:8px 0 10px}
+.phone .app-top .am{width:30px;height:30px;border-radius:10px}
+.phone .app-top .am.sp{background:var(--grad)}
+.phone .app-top .am.tc{background:var(--grad-deep)}
+.phone .app-top .ttl{font-family:"Cairo";font-weight:800;font-size:13.5px}
+.phone .app-top .on{font-size:10.5px;color:var(--success);font-weight:700}
+.pill{display:inline-flex;align-items:center;gap:5px;font-family:"Cairo";font-weight:800;font-size:11px;border-radius:999px;padding:4px 10px}
+.pill.wait{background:var(--wait-bg);color:var(--wait)}
+.pill.ok{background:var(--success-bg);color:var(--success)}
+.pill.soft{background:rgba(11,122,140,.1);color:var(--primary)}
+.sheet{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 13px;margin-top:10px;box-shadow:var(--shadow-sm)}
+.sheet .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sheet .subject{font-family:"Cairo";font-weight:800;font-size:14.5px}
+.sheet .meta{color:var(--muted);font-size:11.5px;font-weight:600;margin-top:2px}
+.big-cta{margin-top:12px;padding:12px;border-radius:13px;background:var(--grad);color:#fff;font-family:"Cairo";font-weight:800;font-size:13.5px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 22px rgba(11,122,140,.3)}
+.counter{font-family:"Cairo";font-weight:900;font-size:17px;color:var(--primary);font-variant-numeric:tabular-nums;letter-spacing:1px}
+.float-chip{position:absolute;z-index:3;display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 15px;box-shadow:var(--shadow-md);font-family:"Cairo";font-weight:800;font-size:12.5px;animation:floaty 5.5s ease-in-out infinite}
+.float-chip .ic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center}
+.float-chip.notif{right:0;top:34px;animation-delay:.4s}
+.float-chip.door{left:0;bottom:40px;animation-delay:1.6s}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.hero-strip{position:relative;z-index:1;margin-top:70px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.hero-strip .hs{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-sm)}
+.hero-strip .hs .n{font-family:"Cairo";font-weight:900;font-size:24px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-strip .hs .t{font-size:14px;font-weight:700;color:var(--deep)}
+
+/* ============ الأقسام ============ */
+.section{padding:96px 0;position:relative}
+.section.alt{background:var(--card);border-block:1px solid var(--line)}
+.sec-head{max-width:720px;margin:0 auto 56px;text-align:center}
+.sec-tag{display:inline-flex;align-items:center;gap:8px;font-family:"Cairo";font-weight:800;font-size:12.5px;color:var(--primary);letter-spacing:.4px;margin-bottom:14px}
+.sec-tag::before,.sec-tag::after{content:"";width:26px;height:2px;border-radius:99px;background:linear-gradient(to left,var(--primary),transparent)}
+.sec-tag::after{background:linear-gradient(to right,var(--primary),transparent)}
+.sec-head h2{font-size:clamp(30px,4.4vw,46px);font-weight:900;letter-spacing:-1.4px;color:var(--deep)}
+.sec-head p{color:var(--muted);font-size:17px;margin-top:12px}
+
+/* بطاقات */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-sm);transition:.35s cubic-bezier(.22,.8,.36,1);position:relative;overflow:hidden}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:#c3e2e8}
+.icon-tile{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;color:#fff}
+.icon-tile.teal{background:var(--grad);box-shadow:0 10px 22px rgba(11,122,140,.3)}
+.icon-tile.coral{background:linear-gradient(135deg,#ff9a5a,#ff7a45);box-shadow:0 10px 22px rgba(255,122,69,.3)}
+.icon-tile.green{background:linear-gradient(135deg,#2fcf8b,#16a96f);box-shadow:0 10px 22px rgba(22,169,111,.3)}
+.icon-tile.deep{background:var(--grad-deep);box-shadow:0 10px 22px rgba(8,50,60,.32)}
+.card h3{font-size:20px;font-weight:800;color:var(--deep);margin:16px 0 6px}
+.card p{color:var(--muted);font-size:14.8px}
+
+/* شبكات */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+
+/* ============ قصة / قيمة ============ */
+.story-card{text-align:right}
+.story-card .kicker{font-size:12.5px;font-weight:800;color:var(--muted)}
+.quote{position:relative;margin-top:64px;background:linear-gradient(120deg,var(--bg-2),#ffffff);border:1px solid var(--line);border-radius:26px;padding:42px 44px;max-width:860px;margin-inline:auto}
+.quote::before{content:"”";position:absolute;top:6px;right:28px;font-family:"Cairo";font-size:110px;line-height:1;color:rgba(11,122,140,.14);font-weight:900}
+.quote p{font-family:"Cairo";font-size:clamp(18px,2.4vw,23px);font-weight:700;line-height:2;color:var(--deep)}
+.quote .who{display:flex;align-items:center;gap:10px;margin-top:20px;color:var(--muted);font-size:13.5px;font-weight:700}
+.quote .who .line{width:34px;height:2px;background:var(--grad);border-radius:99px}
+
+/* ============ التطبيقان ============ */
+.app-card{display:grid;grid-template-columns:88px 1fr;gap:20px;align-items:start;padding:32px}
+.app-card .bigmark{width:88px;height:88px;border-radius:24px;display:grid;place-items:center;box-shadow:var(--shadow-md);color:#fff}
+.app-card h3{font-size:24px;margin:2px 0 4px}
+.app-card .role{display:inline-flex;font-family:"Cairo";font-weight:800;font-size:11.5px;border-radius:999px;padding:3px 12px;margin-bottom:10px}
+.app-card .role.teacher{background:rgba(8,50,60,.09);color:var(--deep-2)}
+.app-card .role.student{background:rgba(11,122,140,.1);color:var(--primary)}
+.app-card .desc{color:var(--muted);font-size:15px}
+.app-card .feats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.app-card .feat{display:flex;align-items:center;gap:9px;font-size:13.8px;font-weight:700;color:var(--ink)}
+.app-card .feat .ck{width:22px;height:22px;border-radius:8px;display:grid;place-items:center;flex:none}
+.app-card .feat .ck.t{background:rgba(8,50,60,.1);color:var(--deep-2)}
+.app-card .feat .ck.s{background:rgba(11,122,140,.12);color:var(--primary)}
+.app-card .screens{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.app-card .chip-screen{font-family:"Cairo";font-size:12px;font-weight:700;color:var(--muted);background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+
+/* مسارات الاستخدام */
+.journeys{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.journey{position:relative;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow-sm)}
+.journey .jh{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.journey .jh .tag{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;color:#fff;flex:none}
+.journey .jh h3{font-size:19px;font-weight:900;color:var(--deep)}
+.journey .jh .who{font-size:12.5px;font-weight:700;color:var(--muted)}
+.jstep{display:flex;gap:16px;position:relative;padding-bottom:24px}
+.jstep:last-child{padding-bottom:0}
+.jstep:not(:last-child)::after{content:"";position:absolute;right:20px;top:46px;bottom:2px;width:2px;background:repeating-linear-gradient(to bottom,var(--line),var(--line) 6px,transparent 6px,transparent 10px)}
+.jstep .snum{width:42px;height:42px;border-radius:13px;background:var(--bg-2);border:1.5px solid var(--line);display:grid;place-items:center;font-family:"Cairo";font-weight:900;color:var(--primary);flex:none}
+.jstep h4{font-family:"Cairo";font-size:16.5px;font-weight:800;color:var(--deep);margin-bottom:3px}
+.jstep p{color:var(--muted);font-size:13.8px}
+
+/* دورة يوم الحصة */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative}
+.tl-card{text-align:center;padding:26px 18px}
+.tl-card .phase{width:64px;height:64px;margin:0 auto;border-radius:20px;display:grid;place-items:center;color:#fff;position:relative}
+.tl-card .phase::after{content:"";position:absolute;width:calc(100% + 30px);height:2px;background:repeating-linear-gradient(to left,var(--line),var(--line) 6px,transparent 6px,transparent 10px);top:50%;right:100%}
+.tl-card:first-child .phase::after{display:none}
+.tl-card .phase .ic{width:30px;height:30px}
+.tl-card h4{font-family:"Cairo";font-weight:800;color:var(--deep);margin:16px 0 4px;font-size:16.5px}
+.tl-card p{color:var(--muted);font-size:13.3px}
+
+/* حالات الباب */
+.doors{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.door{border-radius:22px;padding:26px;border:1px solid var(--line);background:var(--card);text-align:center;transition:.35s}
+.door:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.door .ring{width:66px;height:66px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center}
+.door h4{font-family:"Cairo";font-weight:900;color:var(--deep);font-size:17.5px}
+.door p{font-size:13.6px;color:var(--muted);margin-top:6px}
+.door .mirror{margin-top:16px;background:var(--bg);border:1px dashed var(--line);border-radius:13px;padding:9px;font-family:"Cairo";font-weight:800;font-size:12px}
+.door.wait .ring{background:var(--wait-bg);color:var(--wait)}
+.door.ok .ring{background:var(--success-bg);color:var(--success)}
+.door.no .ring{background:var(--danger-bg);color:var(--danger)}
+
+/* تحميل */
+.dl-zone{overflow:hidden;position:relative;border-radius:34px;padding:60px 56px;background:var(--grad-deep);color:#fff;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.dl-zone::before{content:"";position:absolute;inset:-160px auto auto -120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(18,165,184,.35),transparent 60%);pointer-events:none}
+.dl-zone::after{content:"";position:absolute;inset:auto -140px -200px auto;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,69,.28),transparent 58%);pointer-events:none}
+.dl-zone .inner{position:relative;z-index:1}
+.dl-zone h2{font-size:clamp(26px,3.4vw,40px);font-weight:900;letter-spacing:-1px}
+.dl-zone .lead{color:#cfe8ee;font-size:16px;margin-top:12px;max-width:520px}
+.dl-cards{position:relative;z-index:1;display:grid;gap:14px}
+.dl-app{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:18px 20px;backdrop-filter:blur(10px);transition:.3s}
+.dl-app:hover{background:rgba(255,255,255,.16);transform:translateX(-6px)}
+.dl-app .dm{width:56px;height:56px;border-radius:17px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.dl-app .t1{font-family:"Cairo";font-weight:900;font-size:17px}
+.dl-app .t2{font-size:12.5px;color:#c3dfe5;font-weight:600}
+.dl-app .go{margin-inline-start:auto;display:inline-flex;align-items:center;gap:7px;font-family:"Cairo";font-weight:800;font-size:13px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:9px 15px;transition:.3s}
+.dl-app .go:hover{background:rgba(255,255,255,.26)}
+.dl-note{color:#a9ccd4;font-size:12.5px;margin-top:12px;font-weight:600}
+
+/* التذييل */
+footer{background:var(--deep-2);color:#9cc2ca;padding:54px 0 26px;margin-top:96px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.1)}
+.foot-brand .brand-name{color:#fff}
+.footer-note{color:#9cc2ca;font-size:14px;margin-top:14px;max-width:340px}
+.foot-col h5{font-family:"Cairo";color:#fff;font-size:15px;font-weight:800;margin-bottom:14px}
+.foot-col a{display:block;padding:5px 0;font-size:14px;transition:color .2s}
+.foot-col a:hover{color:#fff}
+.copyright{padding-top:22px;text-align:center;font-size:13px}
+
+/* ظهور متحرك */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,.8,.36,1),transform .8s cubic-bezier(.22,.8,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.12s}.reveal.d2{transition-delay:.24s}.reveal.d3{transition-delay:.36s}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+
+/* ============ استجابة ============ */
+@media(max-width:1020px){
+  .hero-grid{grid-template-columns:1fr;gap:20px}
+  .hero{padding:56px 0 70px}
+  .hero-actions,.hero-actions .btn{flex:1 1 auto;justify-content:center}
+  .stage{min-height:500px;max-width:560px;margin-inline:auto}
+  .phone-student{left:8%}.phone-teacher{right:0}
+  .dl-zone{grid-template-columns:1fr;padding:44px 30px}
+  .dl-zone .lead{font-size:15px}
+  .doors,.timeline{grid-template-columns:1fr 1fr}
+  .tl-card .phase::after{display:none}
+  .journeys,.grid2{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .navin{height:70px}
+  .links,.nav-cta .btn{display:none}
+  .hamburger{display:grid}
+  .mobile-menu.open{display:flex}
+  .hero-strip{grid-template-columns:1fr}
+  .grid3,.doors,.timeline{grid-template-columns:1fr}
+  .app-card{grid-template-columns:1fr}
+  .app-card .feats{grid-template-columns:1fr}
+  .quote{padding:30px 26px}
+  .section{padding:72px 0}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{width:100%}
+}
+
+/* ============ الشعارات الرسمية ============ */
+.mk{width:100%;height:100%;display:block}
+.brand-mark svg,.am svg,.bigmark svg,.dm svg,.tag svg{width:100%;height:100%}
+.phone .app-top .am{overflow:hidden}
+.app-card .bigmark,.dl-app .dm,.journey .jh .tag{overflow:hidden}
+.brand-mark{background:#00627d}
+.phone .app-top .am.sp{background:#00906b}
+.phone .app-top .am.tc{background:#00768c}
+.app-card .bigmark,.dl-app .dm,.journey .jh .tag{background:transparent}
+</style>
+</head>
+<body>
+<a href="#top" style="position:absolute;left:-9999px" aria-label="تخط إلى المحتوى">تخطى إلى المحتوى</a>
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs><linearGradient
+       id="plinearGradient47"
+      ><stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="pstop48" /><stop
+         style="stop-color:#34d4ff;stop-opacity:0;"
+         offset="1"
+         id="pstop49" /></linearGradient><linearGradient
+       id="plinearGradient43"
+      ><stop
+         style="stop-color:#00b4ff;stop-opacity:0.38728324;"
+         offset="0"
+         id="pstop42" /><stop
+         style="stop-color:#00ff7f;stop-opacity:0;"
+         offset="0.63160884"
+         id="pstop43" /></linearGradient><linearGradient
+       id="plinearGradient41"
+      ><stop
+         style="stop-color:#d1ff00;stop-opacity:0.42774567;"
+         offset="0"
+         id="pstop40" /><stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="0.6947003"
+         id="pstop41" /></linearGradient><linearGradient
+       id="plinearGradient38"
+      ><stop
+         style="stop-color:#00b4ff;stop-opacity:1;"
+         offset="0"
+         id="pstop38" /><stop
+         style="stop-color:#00ff7f;stop-opacity:0;"
+         offset="0.63160884"
+         id="pstop39" /></linearGradient><linearGradient
+       id="plinearGradient35"
+      ><stop
+         style="stop-color:#37abc8;stop-opacity:1;"
+         offset="0"
+         id="pstop35" /><stop
+         style="stop-color:#37abc8;stop-opacity:0;"
+         offset="1"
+         id="pstop36" /></linearGradient><rect
+       x="182.75813"
+       y="343.39291"
+       width="440.5433"
+       height="357.82117"
+       id="rect2" /><rect
+       x="182.75813"
+       y="343.39291"
+       width="440.5433"
+       height="357.82117"
+       id="rect2-4" /><radialGradient
+      
+       href="#plinearGradient35"
+       id="pradialGradient36"
+       cx="48.991001"
+       cy="181.58482"
+       fx="48.991001"
+       fy="181.58482"
+       r="20.868895"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(9.9254572,2.0359949)" /><radialGradient
+      
+       href="#plinearGradient35"
+       id="pradialGradient36-5"
+       cx="48.991001"
+       cy="181.58482"
+       fx="48.991001"
+       fy="181.58482"
+       r="20.868895"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(104.58467,-89.959583)" /><radialGradient
+      
+       href="#plinearGradient43"
+       id="pradialGradient39"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(2.7994856,14.633676)" /><radialGradient
+      
+       href="#plinearGradient38"
+       id="pradialGradient39-1"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(95.552533,39.055109)" /><radialGradient
+      
+       href="#plinearGradient41"
+       id="pradialGradient39-9"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(25.916881,-19.891597)" /><radialGradient
+      
+       href="#plinearGradient47"
+       id="pradialGradient49"
+       cx="64.153458"
+       cy="160.85654"
+       fx="64.153458"
+       fy="160.85654"
+       r="76.969955"
+       gradientTransform="matrix(0.88657621,0,0,0.0186879,7.0790706,158.78589)"
+       gradientUnits="userSpaceOnUse" /><linearGradient
+       id="tlinearGradient66"
+      ><stop
+         style="stop-color:#00768c;stop-opacity:1;"
+         offset="0"
+         id="tstop65" /><stop
+         style="stop-color:#00c8c5;stop-opacity:1;"
+         offset="1"
+         id="tstop66" /></linearGradient><linearGradient
+       id="tlinearGradient62"
+      ><stop
+         style="stop-color:#00768c;stop-opacity:1;"
+         offset="0"
+         id="tstop62" /><stop
+         style="stop-color:#00f8f4;stop-opacity:0.49087894;"
+         offset="1"
+         id="tstop63" /></linearGradient><linearGradient
+       id="tlinearGradient19"
+      ><stop
+         style="stop-color:#2077db;stop-opacity:1;"
+         offset="0"
+         id="tstop19" /><stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="tstop20" /></linearGradient><linearGradient
+       id="tlinearGradient47"
+      ><stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="tstop48" /><stop
+         style="stop-color:#34d4ff;stop-opacity:0;"
+         offset="1"
+         id="tstop49" /></linearGradient><linearGradient
+       id="tlinearGradient43"
+      ><stop
+         style="stop-color:#00b4ff;stop-opacity:0.38728324;"
+         offset="0"
+         id="tstop42" /><stop
+         style="stop-color:#00ff7f;stop-opacity:0;"
+         offset="0.63160884"
+         id="tstop43" /></linearGradient><linearGradient
+       id="tlinearGradient41"
+      ><stop
+         style="stop-color:#d1ff00;stop-opacity:0.42774567;"
+         offset="0"
+         id="tstop40" /><stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="0.6947003"
+         id="tstop41" /></linearGradient><linearGradient
+       id="tlinearGradient38"
+      ><stop
+         style="stop-color:#00b4ff;stop-opacity:1;"
+         offset="0"
+         id="tstop38" /><stop
+         style="stop-color:#00ff7f;stop-opacity:0;"
+         offset="0.63160884"
+         id="tstop39" /></linearGradient><linearGradient
+       id="tlinearGradient35"
+      ><stop
+         style="stop-color:#37abc8;stop-opacity:1;"
+         offset="0"
+         id="tstop35" /><stop
+         style="stop-color:#37abc8;stop-opacity:0;"
+         offset="1"
+         id="tstop36" /></linearGradient><rect
+       x="182.75813"
+       y="343.39291"
+       width="440.5433"
+       height="357.82117"
+       id="rect2" /><rect
+       x="182.75813"
+       y="343.39291"
+       width="440.5433"
+       height="357.82117"
+       id="rect2-4" /><radialGradient
+      
+       href="#tlinearGradient47"
+       id="tradialGradient49-2-4"
+       cx="64.153458"
+       cy="160.85654"
+       fx="64.153458"
+       fy="160.85654"
+       r="76.969955"
+       gradientTransform="matrix(0.88657621,0,0,0.0186879,7.0790706,158.78589)"
+       gradientUnits="userSpaceOnUse" /><radialGradient
+      
+       href="#tlinearGradient35"
+       id="tradialGradient36-2-2"
+       cx="48.991001"
+       cy="181.58482"
+       fx="48.991001"
+       fy="181.58482"
+       r="20.868895"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(9.9254572,2.0359949)" /><radialGradient
+      
+       href="#tlinearGradient35"
+       id="tradialGradient36-5-8-5"
+       cx="48.991001"
+       cy="181.58482"
+       fx="48.991001"
+       fy="181.58482"
+       r="20.868895"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(104.58467,-89.959583)" /><radialGradient
+      
+       href="#tlinearGradient43"
+       id="tradialGradient39-5-1"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(2.7994856,14.633676)" /><radialGradient
+      
+       href="#tlinearGradient41"
+       id="tradialGradient39-9-1-1"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(25.916881,-19.891597)" /><radialGradient
+      
+       href="#tlinearGradient38"
+       id="tradialGradient39-1-2-7"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(95.552533,39.055109)" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient20"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037"
+       gradientUnits="userSpaceOnUse" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient21"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient22"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient23"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient24"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient25"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient26"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient27"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient28"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient53"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient54"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient55"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient56"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient57"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient58"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient19"
+       id="tlinearGradient59"
+       gradientUnits="userSpaceOnUse"
+       x1="0"
+       y1="256.00037"
+       x2="512"
+       y2="256.00037" /><linearGradient
+      
+       href="#tlinearGradient62"
+       id="tlinearGradient61"
+       x1="145.54929"
+       y1="259.14948"
+       x2="156.84851"
+       y2="-103.55597"
+       gradientUnits="userSpaceOnUse" /><linearGradient
+      
+       href="#tlinearGradient66"
+       id="tlinearGradient65"
+       x1="267.58102"
+       y1="202.65329"
+       x2="267.58102"
+       y2="463.66562"
+       gradientUnits="userSpaceOnUse" /><linearGradient
+       id="slinearGradient8"
+      ><stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="sstop8" /><stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="sstop9" /></linearGradient><linearGradient
+       id="slinearGradient47"
+      ><stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="sstop48" /><stop
+         style="stop-color:#34d4ff;stop-opacity:0;"
+         offset="1"
+         id="sstop49" /></linearGradient><linearGradient
+       id="slinearGradient43"
+      ><stop
+         style="stop-color:#00b4ff;stop-opacity:0.38728324;"
+         offset="0"
+         id="sstop42" /><stop
+         style="stop-color:#00ff7f;stop-opacity:0;"
+         offset="0.63160884"
+         id="sstop43" /></linearGradient><linearGradient
+       id="slinearGradient41"
+      ><stop
+         style="stop-color:#d1ff00;stop-opacity:0.42774567;"
+         offset="0"
+         id="sstop40" /><stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="0.6947003"
+         id="sstop41" /></linearGradient><linearGradient
+       id="slinearGradient38"
+      ><stop
+         style="stop-color:#00b4ff;stop-opacity:1;"
+         offset="0"
+         id="sstop38" /><stop
+         style="stop-color:#00ff7f;stop-opacity:0;"
+         offset="0.63160884"
+         id="sstop39" /></linearGradient><linearGradient
+       id="slinearGradient35"
+      ><stop
+         style="stop-color:#37abc8;stop-opacity:1;"
+         offset="0"
+         id="sstop35" /><stop
+         style="stop-color:#37abc8;stop-opacity:0;"
+         offset="1"
+         id="sstop36" /></linearGradient><rect
+       x="182.75813"
+       y="343.39291"
+       width="440.5433"
+       height="357.82117"
+       id="rect2" /><rect
+       x="182.75813"
+       y="343.39291"
+       width="440.5433"
+       height="357.82117"
+       id="rect2-4" /><radialGradient
+      
+       href="#slinearGradient47"
+       id="sradialGradient49-2"
+       cx="64.153458"
+       cy="160.85654"
+       fx="64.153458"
+       fy="160.85654"
+       r="76.969955"
+       gradientTransform="matrix(0.88657621,0,0,0.0186879,7.0790706,158.78589)"
+       gradientUnits="userSpaceOnUse" /><radialGradient
+      
+       href="#slinearGradient35"
+       id="sradialGradient36-2"
+       cx="48.991001"
+       cy="181.58482"
+       fx="48.991001"
+       fy="181.58482"
+       r="20.868895"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(9.9254572,2.0359949)" /><radialGradient
+      
+       href="#slinearGradient35"
+       id="sradialGradient36-5-8"
+       cx="48.991001"
+       cy="181.58482"
+       fx="48.991001"
+       fy="181.58482"
+       r="20.868895"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(104.58467,-89.959583)" /><radialGradient
+      
+       href="#slinearGradient43"
+       id="sradialGradient39-5"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(2.7994856,14.633676)" /><radialGradient
+      
+       href="#slinearGradient41"
+       id="sradialGradient39-9-1"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(25.916881,-19.891597)" /><radialGradient
+      
+       href="#slinearGradient38"
+       id="sradialGradient39-1-2"
+       cx="60.509823"
+       cy="111.82285"
+       fx="60.509823"
+       fy="111.82285"
+       r="12.152313"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(95.552533,39.055109)" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient9"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225"
+       gradientUnits="userSpaceOnUse" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient29"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient30"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient31"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient32"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient33"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient34"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient36"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient37"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient39"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient40"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient42"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient44"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient45"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient46"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient48"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient49"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient50"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient51"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /><linearGradient
+      
+       href="#slinearGradient8"
+       id="slinearGradient52"
+       gradientUnits="userSpaceOnUse"
+       x1="-165.83907"
+       y1="223.24225"
+       x2="36.280502"
+       y2="223.24225" /></defs><symbol id="logoProject" viewBox="0 0 136.397 134.3696"><g transform="translate(-38.047551,-70.756348)">
+<g
+      
+      
+      
+      ><rect
+         style="fill:#00627d;fill-opacity:1;fill-rule:nonzero;stroke-width:0.264583"
+        
+         width="134.12082"
+         height="134.12082"
+         x="38.938305"
+         y="71.005135" /><rect
+         style="opacity:0.386525;fill:url(#pradialGradient49);fill-rule:nonzero;stroke:none;stroke-width:0.227941;stroke-opacity:1"
+        
+         width="136.47946"
+         height="2.8768144"
+         x="-4.2837348"
+         y="160.35355"
+         transform="rotate(-15.301313)" /><rect
+         style="opacity:1;fill:url(#pradialGradient36);fill-rule:nonzero;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+        
+         width="41.737789"
+         height="41.737789"
+         x="38.047554"
+         y="162.75191" /><rect
+         style="fill:url(#pradialGradient36-5);fill-rule:nonzero;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+        
+         width="41.737789"
+         height="41.737789"
+         x="132.70679"
+         y="70.756348" /><rect
+         style="fill:url(#pradialGradient39);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+        
+         width="24.304626"
+         height="24.304626"
+         x="51.156994"
+         y="114.30421" /><rect
+         style="fill:url(#pradialGradient39-9);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+        
+         width="24.304626"
+         height="24.304626"
+         x="74.274391"
+         y="79.778923" /><rect
+         style="fill:url(#pradialGradient39-1);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+        
+         width="24.304626"
+         height="24.304626"
+         x="143.91005"
+         y="138.72565" /><g
+        
+         transform="translate(5.2916669,11.112501)"
+         style="fill:#d7eef4"><path
+           d="m 151.84861,169.21551 c -1.58264,0 -2.7595,0.38549 -3.53053,1.15652 -0.77103,0.81161 -1.31918,1.8258 -1.64383,3.04322 -0.16232,0.60871 -0.26379,1.13647 -0.30437,1.58285 -0.0317,0.38013 -0.0509,0.84669 -0.0579,1.39992 H 51.087303 l -1.82573,4.10207 H 156.47467 l 1.82624,-4.10207 h -2.86132 -1.58233 c -0.48697,0 -1.03512,-0.0408 -1.64383,-0.12196 -0.56813,-0.0406 -1.07497,-0.22312 -1.52136,-0.54777 -0.4058,-0.32464 -0.60874,-0.89267 -0.60874,-1.70429 0,-0.16232 0.0199,-0.44633 0.0605,-0.85214 0.0406,-0.36523 0.20324,-0.77111 0.48731,-1.2175 0.28406,-0.4058 0.75062,-0.68982 1.39991,-0.85214 0.56813,-0.16233 1.25803,-0.14193 2.06964,0.061 0.81161,0.2029 1.33937,0.36505 1.58285,0.48679 -0.40581,-0.93336 -1.01463,-1.58246 -1.82624,-1.94769 -0.77104,-0.32464 -1.44054,-0.48679 -2.00867,-0.48679 z"
+           style="text-align:center;white-space:pre;display:inline;fill:#d7eef4;fill-opacity:1"
+          
+           /><path
+           d="m 152.21345,117.475 -6.08697,1.33894 v 42.48836 c 0,1.4609 0.36509,2.59696 1.09554,3.40858 0.73045,0.77103 1.62329,1.27838 2.67839,1.52187 1.09568,0.24348 2.21186,0.24348 3.34812,0 1.17684,-0.24349 2.19103,-0.66977 3.04322,-1.27848 0.89278,-0.64929 1.46132,-1.42026 1.70481,-2.31303 -0.36523,0.16232 -0.87258,0.32446 -1.52187,0.48679 -0.64929,0.16232 -1.29891,0.24391 -1.9482,0.24391 -0.6493,-0.0406 -1.19693,-0.20324 -1.64332,-0.48731 -0.44638,-0.32464 -0.66972,-0.85188 -0.66972,-1.58233 z"
+           style="text-align:center;white-space:pre;display:inline;fill:#d7eef4;fill-opacity:1"
+           /><path
+           d="m 94.994718,117.475 -6.086967,1.33894 v 45.95791 c 0,0.48697 0.202942,0.83166 0.608749,1.03457 0.405807,0.2029 0.81169,0.32477 1.217497,0.36535 h 0.608748 8.52196 2.434475 13.69632 13.69581 2.43499 8.52196 0.60875 c 0.40581,-0.0406 0.81169,-0.16245 1.2175,-0.36535 0.4058,-0.20291 0.60823,-0.5476 0.60823,-1.03457 V 117.475 l -6.08697,1.33894 v 41.27086 h -4.86947 -2.43499 -5.18521 c 0.33212,-0.9647 0.49816,-1.9794 0.49816,-3.04374 0,-2.02903 -0.58843,-3.83459 -1.76527,-5.41724 -1.17684,-1.62323 -2.6785,-2.71901 -4.50464,-3.28714 -0.4058,-0.16232 -0.89276,-0.46673 -1.46089,-0.91312 -0.52755,-0.48697 -0.95331,-1.33901 -1.27796,-2.55643 -0.28406,1.21742 -0.68994,2.06946 -1.21749,2.55643 -0.48697,0.44639 -0.95353,0.7304 -1.39992,0.85214 -1.86671,0.56813 -3.40917,1.66391 -4.62659,3.28714 -1.21742,1.58265 -1.82573,3.40861 -1.82573,5.47822 0,1.06434 0.16604,2.07904 0.49816,3.04374 h -5.12475 -2.434475 -4.869987 z m 21.000782,36.52232 c 0.8522,0 1.56198,0.30441 2.13011,0.91312 0.60871,0.56813 0.91312,1.27843 0.91312,2.13062 0,0.85219 -0.30441,1.58289 -0.91312,2.1916 -0.56813,0.56813 -1.27791,0.85214 -2.13011,0.85214 -0.85219,0 -1.58288,-0.28401 -2.19159,-0.85214 -0.56813,-0.60871 -0.85215,-1.33941 -0.85215,-2.1916 0,-0.85219 0.28402,-1.56249 0.85215,-2.13062 0.60871,-0.60871 1.3394,-0.91312 2.19159,-0.91312 z"
+           style="text-align:center;white-space:pre;display:inline;fill:#d7eef4;fill-opacity:1"
+           /><path
+           d="m 78.011776,144.92759 c -0.324646,0.36522 -0.649456,0.75071 -0.974101,1.15652 -0.324645,0.4058 -0.588263,1.01463 -0.791166,1.82624 -1.542066,0.0812 -2.96214,0.54772 -4.260722,1.39992 -1.298582,0.85219 -2.333687,1.94797 -3.10472,3.28713 -0.730452,1.33917 -1.09554,2.82043 -1.09554,4.44366 0,1.06434 0.166036,2.07904 0.49816,3.04374 h -7.437789 c -0.730452,0 -1.501423,-0.20294 -2.313037,-0.60875 -0.811613,-0.4058 -1.419921,-1.01463 -1.825728,-1.82624 l -5.113383,8.52196 h 25.261507 c 1.663808,0 3.165472,-0.40588 4.504635,-1.2175 1.379743,-0.81161 2.475007,-1.90739 3.286621,-3.28714 0.811613,-1.42032 1.217497,-2.96226 1.217497,-4.62607 0,-2.3131 -0.649103,-4.48426 -1.947685,-6.5133 -1.258001,-2.06961 -3.226224,-3.93636 -5.904549,-5.60017 z m -1.156519,9.06973 c 0.852194,0 1.56249,0.30441 2.130619,0.91312 0.608711,0.56813 0.913123,1.27843 0.913123,2.13062 0,0.85219 -0.304412,1.58289 -0.913123,2.1916 -0.568129,0.56813 -1.278425,0.85214 -2.130619,0.85214 -0.852194,0 -1.582887,-0.28401 -2.191597,-0.85214 -0.56813,-0.60871 -0.852145,-1.33941 -0.852145,-2.1916 0,-0.85219 0.284015,-1.56249 0.852145,-2.13062 0.60871,-0.60871 1.339403,-0.91312 2.191597,-0.91312 z"
+           style="text-align:center;white-space:pre;display:inline;fill:#d7eef4;fill-opacity:1"
+           /><g
+          
+           transform="matrix(1,0,0,-1,0,203.64857)"
+           style="fill:#d7eef4"><path
+             d="m 152.21288,77.475908 -6.08696,1.33893 v 42.488352 c 0,0.81397 6.08696,0.89551 6.08696,0 z"
+             style="text-align:center;text-anchor:middle;white-space:pre;fill:#d7eef4;fill-opacity:1"
+            
+             /><path
+             d="m 94.994157,77.475908 -6.08696,1.33893 v 45.957902 c 0,0.48697 0.20294,0.83166 0.60874,1.03456 0.40581,0.20291 0.81169,0.32478 1.2175,0.36536 h 0.60875 8.52196 2.434473 13.69632 13.6958 2.435 8.52196 0.60823 c 0.40581,-0.0406 0.81169,-0.16245 1.2175,-0.36536 0.4058,-0.2029 0.60874,-0.54759 0.60874,-1.03456 V 77.475908 l -6.08696,1.33893 v 41.270852 h -4.86947 -2.435 -5.18521 c 0.33212,-0.9647 0.49816,-1.97941 0.49816,-3.04374 0,-2.02904 -0.58843,-3.8346 -1.76527,-5.41724 -1.17684,-1.62323 -2.6785,-2.71901 -4.50463,-3.28714 -0.40581,-0.16232 -0.89276,-0.46674 -1.46089,-0.91312 -0.52755,-0.48697 -0.95332,-1.33902 -1.27796,-2.55644 -0.28407,1.21742 -0.68995,2.06947 -1.2175,2.55644 -0.48697,0.44638 -0.95353,0.7304 -1.39991,0.85214 -1.86671,0.56813 -3.40917,1.66391 -4.62659,3.28714 -1.21742,1.58265 -1.82625,3.4086 -1.82625,5.47822 0,1.06433 0.16655,2.07904 0.49868,3.04374 h -5.12475 -2.434473 -4.86999 z m 21.000783,36.522812 c 0.85219,0 1.56197,0.3039 2.1301,0.91261 0.60871,0.56813 0.91312,1.27842 0.91312,2.13062 0,0.85219 -0.30441,1.58289 -0.91312,2.1916 -0.56813,0.56812 -1.27791,0.85214 -2.1301,0.85214 -0.8522,0 -1.58289,-0.28402 -2.1916,-0.85214 -0.56813,-0.60871 -0.85214,-1.33941 -0.85214,-2.1916 0,-0.8522 0.28401,-1.56249 0.85214,-2.13062 0.60871,-0.60871 1.3394,-0.91261 2.1916,-0.91261 z"
+             style="text-align:center;text-anchor:middle;white-space:pre;fill:#d7eef4;fill-opacity:1"
+             /><path
+             d="m 78.011217,104.92848 c -0.32465,0.36522 -0.64946,0.75071 -0.9741,1.15651 -0.32465,0.40581 -0.58826,1.01464 -0.79117,1.82625 -1.54206,0.0812 -2.96265,0.54772 -4.26124,1.39991 -1.29858,0.8522 -2.33317,1.94798 -3.1042,3.28714 -0.73045,1.33916 -1.09554,2.82043 -1.09554,4.44366 0,1.06433 0.16604,2.07904 0.49816,3.04374 h -7.43779 c -0.73045,0 -1.50142,-0.20294 -2.31303,-0.60875 -0.81162,-0.40581 -1.42044,-1.01463 -1.82625,-1.82624 l -5.11287,8.52196 h 25.26151 c 1.66381,0 3.16496,-0.40589 4.50412,-1.2175 1.37974,-0.81161 2.47552,-1.90739 3.28714,-3.28714 0.81161,-1.42032 1.21749,-2.96226 1.21749,-4.62607 0,-2.3131 -0.6491,-4.48427 -1.94768,-6.5133 -1.258,-2.06961 -3.22622,-3.93637 -5.90455,-5.60017 z m -1.15652,9.07024 c 0.8522,0 1.56249,0.3039 2.13062,0.91261 0.60871,0.56813 0.91261,1.27842 0.91261,2.13062 0,0.85219 -0.3039,1.58289 -0.91261,2.1916 -0.56813,0.56812 -1.27842,0.85214 -2.13062,0.85214 -0.85219,0 -1.58289,-0.28402 -2.1916,-0.85214 -0.56813,-0.60871 -0.85214,-1.33941 -0.85214,-2.1916 0,-0.8522 0.28401,-1.56249 0.85214,-2.13062 0.60871,-0.60871 1.33941,-0.91261 2.1916,-0.91261 z"
+             style="text-align:center;text-anchor:middle;white-space:pre;fill:#d7eef4;fill-opacity:1"
+             /></g></g></g>
+</g>
+</symbol><symbol id="logoTc" viewBox="0 0 136.397 134.3696"><g transform="translate(408.78126,-135.20209)">
+<g
+      
+      
+      
+      
+       transform="translate(-188.19435,-34.518112)"><g
+        
+         transform="translate(-258.63446,98.96385)"
+        
+        
+        ><rect
+           style="fill:#00768c;fill-opacity:1;fill-rule:nonzero;stroke-width:0.264583"
+          
+           width="134.12082"
+           height="134.12082"
+           x="38.938305"
+           y="71.005135" /><rect
+           style="opacity:0.386525;fill:url(#tradialGradient49-2-4);fill-rule:nonzero;stroke:none;stroke-width:0.227941;stroke-opacity:1"
+          
+           width="136.47946"
+           height="2.8768144"
+           x="-4.2837348"
+           y="160.35355"
+           transform="rotate(-15.301313)" /><rect
+           style="opacity:1;fill:url(#tradialGradient36-2-2);fill-rule:nonzero;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+          
+           width="41.737789"
+           height="41.737789"
+           x="38.047554"
+           y="162.75191" /><rect
+           style="fill:url(#tradialGradient36-5-8-5);fill-rule:nonzero;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+          
+           width="41.737789"
+           height="41.737789"
+           x="132.70679"
+           y="70.756348" /><rect
+           style="fill:url(#tradialGradient39-5-1);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+          
+           width="24.304626"
+           height="24.304626"
+           x="51.156994"
+           y="114.30421" /><rect
+           style="fill:url(#tradialGradient39-9-1-1);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+          
+           width="24.304626"
+           height="24.304626"
+           x="74.274391"
+           y="79.778923" /><rect
+           style="fill:url(#tradialGradient39-1-2-7);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+          
+           width="24.304626"
+           height="24.304626"
+           x="143.91005"
+           y="138.72565" /></g><g
+        
+         transform="translate(-120.1965,32.524762)"
+        
+        
+        ><g
+          
+           transform="matrix(0.22523535,0,0,0.22523535,-89.85214,146.70991)"
+           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1">
+	<g
+  
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1">
+		<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="m 503.117,92.802 c 0.009,-0.583 -0.132,-1.112 -0.238,-1.677 -0.097,-0.556 -0.15,-1.103 -0.353,-1.633 -0.23,-0.6 -0.618,-1.103 -0.971,-1.642 -0.247,-0.362 -0.362,-0.777 -0.662,-1.103 L 440.177,19.472 c -3.275,-3.628 -8.854,-3.902 -12.473,-0.636 -3.619,3.266 -3.902,8.845 -0.636,12.465 l 57.035,63.188 -33.262,83.165 c -1.818,4.529 0.388,9.666 4.917,11.485 1.068,0.424 2.18,0.627 3.275,0.627 3.505,0 6.824,-2.101 8.201,-5.553 l 35.31,-88.276 c 0.168,-0.424 0.141,-0.865 0.238,-1.298 0.141,-0.619 0.326,-1.21 0.335,-1.837"
+   />
+		<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="m 379.586,507.556 c -4.882,0 -8.828,-3.955 -8.828,-8.828 0,-0.335 0,-0.786 -0.883,-1.624 -6.321,-6.047 -28.893,-7.865 -42.849,-7.212 h -0.071 c -34.763,0 -58.492,-7.027 -70.956,-20.895 -12.465,13.877 -36.228,20.904 -70.621,20.904 -14.354,-0.662 -36.935,1.156 -43.255,7.203 -0.883,0.839 -0.883,1.289 -0.883,1.624 0,4.873 -3.946,8.828 -8.828,8.828 -4.882,0 -8.828,-3.955 -8.828,-8.828 0,-5.455 2.198,-10.443 6.356,-14.398 13.956,-13.338 48.975,-12.385 55.852,-12.076 37.632,-0.009 51.862,-9.366 56.956,-14.936 3.143,-3.443 4.114,-6.709 4.387,-8.66 -0.124,-2.26 0.071,-3.778 0.132,-4.193 0.644,-4.326 4.361,-7.53 8.73,-7.53 4.369,0 8.086,3.204 8.73,7.53 0.062,0.424 0.265,1.977 0.124,4.273 0.291,1.889 1.262,5.155 4.396,8.58 5.094,5.57 19.324,14.927 57.37,14.927 6.462,-0.3 41.481,-1.236 55.437,12.085 4.158,3.955 6.356,8.942 6.356,14.398 0.004,4.873 -3.942,8.828 -8.824,8.828"
+   />
+	</g>
+	<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="m 17.655,445.762 h 476.69 V 251.556 H 17.655 Z"
+   />
+	<g
+  
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1">
+		<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="m 17.655,498.728 h 35.31 v -52.966 h -35.31 z"
+   />
+		<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="m 459.034,498.728 h 35.31 v -52.966 h -35.31 z"
+   />
+		<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="m 0,251.556 h 512 v -35.31 H 0 Z"
+   />
+	</g>
+	<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="M 123.586,216.245 H 17.655 C 7.901,216.245 0,208.344 0,198.59 0,188.835 7.901,180.935 17.655,180.935 h 105.931 c -11.776,9.798 -11.767,25.6 0,35.31"
+   />
+	<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="M 141.241,180.935 H 35.31 c -9.754,0 -17.655,-7.901 -17.655,-17.655 0,-9.754 7.901,-17.655 17.655,-17.655 h 105.931 c -11.776,9.798 -11.767,25.6 0,35.31"
+   />
+	<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="M 335.448,216.245 H 176.552 L 191.179,59.017 c 1.006,-10.876 7.442,-20.259 16.393,-26.968 9.119,-6.824 20.542,-9.825 31.929,-9.825 h 37.932 c 9.26,0 18.582,2.083 26.341,7.124 10.408,6.762 17.814,17.24 18.953,29.67 z"
+   />
+	<g
+  
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1">
+		<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="M 494.345,216.245 H 423.724 V 198.97 c 0,-9.958 8.077,-18.035 18.035,-18.035 h 34.551 c 9.958,0 18.035,8.077 18.035,18.035 z"
+   />
+		<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="M 445.506,57.192 429.899,72.799 386.202,29.102 401.809,13.495 c 12.067,-12.067 31.629,-12.067 43.697,0 12.068,12.067 12.068,31.629 0,43.697"
+   />
+	</g>
+	<path
+   style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:28.0817;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+   d="m 410.921,401.624 h -309.84 c -16.825,0 -30.464,-13.639 -30.464,-30.455 v -45.021 c 0,-16.817 13.639,-30.455 30.464,-30.455 H 410.92 c 16.825,0 30.455,13.639 30.455,30.455 v 45.021 c 10e-4,16.817 -13.629,30.455 -30.454,30.455"
+   />
+</g><g
+          
+           transform="matrix(0.22523535,0,0,0.22523535,-89.85214,146.7137)"
+           style="stroke:url(#tlinearGradient20);stroke-width:3.66284;stroke-dasharray:none">
+	<g
+  
+   style="stroke:url(#tlinearGradient23);stroke-width:3.66284;stroke-dasharray:none">
+		<path
+   style="fill:#e0e2e3;stroke:url(#tlinearGradient21);stroke-width:3.66284;stroke-dasharray:none"
+   d="m 503.117,92.802 c 0.009,-0.583 -0.132,-1.112 -0.238,-1.677 -0.097,-0.556 -0.15,-1.103 -0.353,-1.633 -0.23,-0.6 -0.618,-1.103 -0.971,-1.642 -0.247,-0.362 -0.362,-0.777 -0.662,-1.103 L 440.177,19.472 c -3.275,-3.628 -8.854,-3.902 -12.473,-0.636 -3.619,3.266 -3.902,8.845 -0.636,12.465 l 57.035,63.188 -33.262,83.165 c -1.818,4.529 0.388,9.666 4.917,11.485 1.068,0.424 2.18,0.627 3.275,0.627 3.505,0 6.824,-2.101 8.201,-5.553 l 35.31,-88.276 c 0.168,-0.424 0.141,-0.865 0.238,-1.298 0.141,-0.619 0.326,-1.21 0.335,-1.837"
+   />
+		<path
+   style="fill:#e0e2e3;stroke:url(#tlinearGradient22);stroke-width:3.66284;stroke-dasharray:none"
+   d="m 379.586,507.556 c -4.882,0 -8.828,-3.955 -8.828,-8.828 0,-0.335 0,-0.786 -0.883,-1.624 -6.321,-6.047 -28.893,-7.865 -42.849,-7.212 h -0.071 c -34.763,0 -58.492,-7.027 -70.956,-20.895 -12.465,13.877 -36.228,20.904 -70.621,20.904 -14.354,-0.662 -36.935,1.156 -43.255,7.203 -0.883,0.839 -0.883,1.289 -0.883,1.624 0,4.873 -3.946,8.828 -8.828,8.828 -4.882,0 -8.828,-3.955 -8.828,-8.828 0,-5.455 2.198,-10.443 6.356,-14.398 13.956,-13.338 48.975,-12.385 55.852,-12.076 37.632,-0.009 51.862,-9.366 56.956,-14.936 3.143,-3.443 4.114,-6.709 4.387,-8.66 -0.124,-2.26 0.071,-3.778 0.132,-4.193 0.644,-4.326 4.361,-7.53 8.73,-7.53 4.369,0 8.086,3.204 8.73,7.53 0.062,0.424 0.265,1.977 0.124,4.273 0.291,1.889 1.262,5.155 4.396,8.58 5.094,5.57 19.324,14.927 57.37,14.927 6.462,-0.3 41.481,-1.236 55.437,12.085 4.158,3.955 6.356,8.942 6.356,14.398 0.004,4.873 -3.942,8.828 -8.824,8.828"
+   />
+	</g>
+	<path
+   style="fill:url(#tlinearGradient65);fill-opacity:1;stroke:url(#tlinearGradient24);stroke-width:3.66284;stroke-dasharray:none"
+   d="m 17.655,445.762 h 476.69 V 251.556 H 17.655 Z"
+   />
+	<g
+  
+   style="fill:#00768c;fill-opacity:1;stroke:url(#tlinearGradient28);stroke-width:3.66284;stroke-dasharray:none">
+		<path
+   style="fill:#00768c;fill-opacity:1;stroke:url(#tlinearGradient25);stroke-width:3.66284;stroke-dasharray:none"
+   d="m 17.655,498.728 h 35.31 v -52.966 h -35.31 z"
+   />
+		<path
+   style="fill:#00768c;fill-opacity:1;stroke:url(#tlinearGradient26);stroke-width:3.66284;stroke-dasharray:none"
+   d="m 459.034,498.728 h 35.31 v -52.966 h -35.31 z"
+   />
+		<path
+   style="fill:#00768c;fill-opacity:1;stroke:url(#tlinearGradient27);stroke-width:3.66284;stroke-dasharray:none"
+   d="m 0,251.556 h 512 v -35.31 H 0 Z"
+   />
+	</g>
+	<path
+   style="fill:#d75a4a;stroke:url(#tlinearGradient53);stroke-width:3.66284;stroke-dasharray:none"
+   d="M 123.586,216.245 H 17.655 C 7.901,216.245 0,208.344 0,198.59 0,188.835 7.901,180.935 17.655,180.935 h 105.931 c -11.776,9.798 -11.767,25.6 0,35.31"
+   />
+	<path
+   style="fill:#ecba16;stroke:url(#tlinearGradient54);stroke-width:3.66284;stroke-dasharray:none"
+   d="M 141.241,180.935 H 35.31 c -9.754,0 -17.655,-7.901 -17.655,-17.655 0,-9.754 7.901,-17.655 17.655,-17.655 h 105.931 c -11.776,9.798 -11.767,25.6 0,35.31"
+   />
+	<path
+   style="fill:url(#tlinearGradient61);fill-opacity:1;stroke:url(#tlinearGradient55);stroke-width:3.66284;stroke-dasharray:none"
+   d="M 335.448,216.245 H 176.552 L 191.179,59.017 c 1.006,-10.876 7.442,-20.259 16.393,-26.968 9.119,-6.824 20.542,-9.825 31.929,-9.825 h 37.932 c 9.26,0 18.582,2.083 26.341,7.124 10.408,6.762 17.814,17.24 18.953,29.67 z"
+   />
+	<g
+  
+   style="stroke:url(#tlinearGradient58);stroke-width:3.66284;stroke-dasharray:none">
+		<path
+   style="fill:#b0b6bb;stroke:url(#tlinearGradient56);stroke-width:3.66284;stroke-dasharray:none"
+   d="M 494.345,216.245 H 423.724 V 198.97 c 0,-9.958 8.077,-18.035 18.035,-18.035 h 34.551 c 9.958,0 18.035,8.077 18.035,18.035 z"
+   />
+		<path
+   style="fill:#b0b6bb;stroke:url(#tlinearGradient57);stroke-width:3.66284;stroke-dasharray:none"
+   d="M 445.506,57.192 429.899,72.799 386.202,29.102 401.809,13.495 c 12.067,-12.067 31.629,-12.067 43.697,0 12.068,12.067 12.068,31.629 0,43.697"
+   />
+	</g>
+	<path
+   style="fill:#00768c;fill-opacity:1;stroke:url(#tlinearGradient59);stroke-width:3.66284;stroke-dasharray:none"
+   d="m 410.921,401.624 h -309.84 c -16.825,0 -30.464,-13.639 -30.464,-30.455 v -45.021 c 0,-16.817 13.639,-30.455 30.464,-30.455 H 410.92 c 16.825,0 30.455,13.639 30.455,30.455 v 45.021 c 10e-4,16.817 -13.629,30.455 -30.454,30.455"
+   />
+</g></g><g
+        
+         transform="matrix(0.59212081,0,0,0.59212081,-205.87806,151.81925)"
+        
+        
+        ><g
+          
+           transform="translate(-5.1921191)"><g
+            
+             transform="matrix(0.33947567,0,0,0.33947567,100.65979,135.15263)"
+             style="fill:#ffffff;fill-opacity:1"><path
+               d="m 151.84861,169.21551 c -1.58264,0 -2.7595,0.38549 -3.53053,1.15652 -0.77103,0.81161 -1.31918,1.8258 -1.64383,3.04322 -0.16232,0.60871 -0.26379,1.13647 -0.30437,1.58285 -0.0317,0.38013 -0.0509,0.84669 -0.0579,1.39992 H 51.087303 l -1.82573,4.10207 H 156.47467 l 1.82624,-4.10207 h -2.86132 -1.58233 c -0.48697,0 -1.03512,-0.0408 -1.64383,-0.12196 -0.56813,-0.0406 -1.07497,-0.22312 -1.52136,-0.54777 -0.4058,-0.32464 -0.60874,-0.89267 -0.60874,-1.70429 0,-0.16232 0.0199,-0.44633 0.0605,-0.85214 0.0406,-0.36523 0.20324,-0.77111 0.48731,-1.2175 0.28406,-0.4058 0.75062,-0.68982 1.39991,-0.85214 0.56813,-0.16233 1.25803,-0.14193 2.06964,0.061 0.81161,0.2029 1.33937,0.36505 1.58285,0.48679 -0.40581,-0.93336 -1.01463,-1.58246 -1.82624,-1.94769 -0.77104,-0.32464 -1.44054,-0.48679 -2.00867,-0.48679 z"
+               style="text-align:center;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1"
+              
+               /><path
+               d="m 152.21345,117.475 -6.08697,1.33894 v 42.48836 c 0,1.4609 0.36509,2.59696 1.09554,3.40858 0.73045,0.77103 1.62329,1.27838 2.67839,1.52187 1.09568,0.24348 2.21186,0.24348 3.34812,0 1.17684,-0.24349 2.19103,-0.66977 3.04322,-1.27848 0.89278,-0.64929 1.46132,-1.42026 1.70481,-2.31303 -0.36523,0.16232 -0.87258,0.32446 -1.52187,0.48679 -0.64929,0.16232 -1.29891,0.24391 -1.9482,0.24391 -0.6493,-0.0406 -1.19693,-0.20324 -1.64332,-0.48731 -0.44638,-0.32464 -0.66972,-0.85188 -0.66972,-1.58233 z"
+               style="text-align:center;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1"
+               /><path
+               d="m 94.994718,117.475 -6.086967,1.33894 v 45.95791 c 0,0.48697 0.202942,0.83166 0.608749,1.03457 0.405807,0.2029 0.81169,0.32477 1.217497,0.36535 h 0.608748 8.52196 2.434475 13.69632 13.69581 2.43499 8.52196 0.60875 c 0.40581,-0.0406 0.81169,-0.16245 1.2175,-0.36535 0.4058,-0.20291 0.60823,-0.5476 0.60823,-1.03457 V 117.475 l -6.08697,1.33894 v 41.27086 h -4.86947 -2.43499 -5.18521 c 0.33212,-0.9647 0.49816,-1.9794 0.49816,-3.04374 0,-2.02903 -0.58843,-3.83459 -1.76527,-5.41724 -1.17684,-1.62323 -2.6785,-2.71901 -4.50464,-3.28714 -0.4058,-0.16232 -0.89276,-0.46673 -1.46089,-0.91312 -0.52755,-0.48697 -0.95331,-1.33901 -1.27796,-2.55643 -0.28406,1.21742 -0.68994,2.06946 -1.21749,2.55643 -0.48697,0.44639 -0.95353,0.7304 -1.39992,0.85214 -1.86671,0.56813 -3.40917,1.66391 -4.62659,3.28714 -1.21742,1.58265 -1.82573,3.40861 -1.82573,5.47822 0,1.06434 0.16604,2.07904 0.49816,3.04374 h -5.12475 -2.434475 -4.869987 z m 21.000782,36.52232 c 0.8522,0 1.56198,0.30441 2.13011,0.91312 0.60871,0.56813 0.91312,1.27843 0.91312,2.13062 0,0.85219 -0.30441,1.58289 -0.91312,2.1916 -0.56813,0.56813 -1.27791,0.85214 -2.13011,0.85214 -0.85219,0 -1.58288,-0.28401 -2.19159,-0.85214 -0.56813,-0.60871 -0.85215,-1.33941 -0.85215,-2.1916 0,-0.85219 0.28402,-1.56249 0.85215,-2.13062 0.60871,-0.60871 1.3394,-0.91312 2.19159,-0.91312 z"
+               style="text-align:center;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1"
+               /><path
+               d="m 78.011776,144.92759 c -0.324646,0.36522 -0.649456,0.75071 -0.974101,1.15652 -0.324645,0.4058 -0.588263,1.01463 -0.791166,1.82624 -1.542066,0.0812 -2.96214,0.54772 -4.260722,1.39992 -1.298582,0.85219 -2.333687,1.94797 -3.10472,3.28713 -0.730452,1.33917 -1.09554,2.82043 -1.09554,4.44366 0,1.06434 0.166036,2.07904 0.49816,3.04374 h -7.437789 c -0.730452,0 -1.501423,-0.20294 -2.313037,-0.60875 -0.811613,-0.4058 -1.419921,-1.01463 -1.825728,-1.82624 l -5.113383,8.52196 h 25.261507 c 1.663808,0 3.165472,-0.40588 4.504635,-1.2175 1.379743,-0.81161 2.475007,-1.90739 3.286621,-3.28714 0.811613,-1.42032 1.217497,-2.96226 1.217497,-4.62607 0,-2.3131 -0.649103,-4.48426 -1.947685,-6.5133 -1.258001,-2.06961 -3.226224,-3.93636 -5.904549,-5.60017 z m -1.156519,9.06973 c 0.852194,0 1.56249,0.30441 2.130619,0.91312 0.608711,0.56813 0.913123,1.27843 0.913123,2.13062 0,0.85219 -0.304412,1.58289 -0.913123,2.1916 -0.568129,0.56813 -1.278425,0.85214 -2.130619,0.85214 -0.852194,0 -1.582887,-0.28401 -2.191597,-0.85214 -0.56813,-0.60871 -0.852145,-1.33941 -0.852145,-2.1916 0,-0.85219 0.284015,-1.56249 0.852145,-2.13062 0.60871,-0.60871 1.339403,-0.91312 2.191597,-0.91312 z"
+               style="text-align:center;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1"
+               /><g
+              
+               transform="matrix(1,0,0,-1,0,203.64857)"
+               style="fill:#ffffff;fill-opacity:1"><path
+                 d="m 152.21288,77.475908 -6.08696,1.33893 v 42.488352 c 0,0.81397 6.08696,0.89551 6.08696,0 z"
+                 style="text-align:center;text-anchor:middle;white-space:pre;fill:#ffffff;fill-opacity:1"
+                
+                 /><path
+                 d="m 94.994157,77.475908 -6.08696,1.33893 v 45.957902 c 0,0.48697 0.20294,0.83166 0.60874,1.03456 0.40581,0.20291 0.81169,0.32478 1.2175,0.36536 h 0.60875 8.52196 2.434473 13.69632 13.6958 2.435 8.52196 0.60823 c 0.40581,-0.0406 0.81169,-0.16245 1.2175,-0.36536 0.4058,-0.2029 0.60874,-0.54759 0.60874,-1.03456 V 77.475908 l -6.08696,1.33893 v 41.270852 h -4.86947 -2.435 -5.18521 c 0.33212,-0.9647 0.49816,-1.97941 0.49816,-3.04374 0,-2.02904 -0.58843,-3.8346 -1.76527,-5.41724 -1.17684,-1.62323 -2.6785,-2.71901 -4.50463,-3.28714 -0.40581,-0.16232 -0.89276,-0.46674 -1.46089,-0.91312 -0.52755,-0.48697 -0.95332,-1.33902 -1.27796,-2.55644 -0.28407,1.21742 -0.68995,2.06947 -1.2175,2.55644 -0.48697,0.44638 -0.95353,0.7304 -1.39991,0.85214 -1.86671,0.56813 -3.40917,1.66391 -4.62659,3.28714 -1.21742,1.58265 -1.82625,3.4086 -1.82625,5.47822 0,1.06433 0.16655,2.07904 0.49868,3.04374 h -5.12475 -2.434473 -4.86999 z m 21.000783,36.522812 c 0.85219,0 1.56197,0.3039 2.1301,0.91261 0.60871,0.56813 0.91312,1.27842 0.91312,2.13062 0,0.85219 -0.30441,1.58289 -0.91312,2.1916 -0.56813,0.56812 -1.27791,0.85214 -2.1301,0.85214 -0.8522,0 -1.58289,-0.28402 -2.1916,-0.85214 -0.56813,-0.60871 -0.85214,-1.33941 -0.85214,-2.1916 0,-0.8522 0.28401,-1.56249 0.85214,-2.13062 0.60871,-0.60871 1.3394,-0.91261 2.1916,-0.91261 z"
+                 style="text-align:center;text-anchor:middle;white-space:pre;fill:#ffffff;fill-opacity:1"
+                 /><path
+                 d="m 78.011217,104.92848 c -0.32465,0.36522 -0.64946,0.75071 -0.9741,1.15651 -0.32465,0.40581 -0.58826,1.01464 -0.79117,1.82625 -1.54206,0.0812 -2.96265,0.54772 -4.26124,1.39991 -1.29858,0.8522 -2.33317,1.94798 -3.1042,3.28714 -0.73045,1.33916 -1.09554,2.82043 -1.09554,4.44366 0,1.06433 0.16604,2.07904 0.49816,3.04374 h -7.43779 c -0.73045,0 -1.50142,-0.20294 -2.31303,-0.60875 -0.81162,-0.40581 -1.42044,-1.01463 -1.82625,-1.82624 l -5.11287,8.52196 h 25.26151 c 1.66381,0 3.16496,-0.40589 4.50412,-1.2175 1.37974,-0.81161 2.47552,-1.90739 3.28714,-3.28714 0.81161,-1.42032 1.21749,-2.96226 1.21749,-4.62607 0,-2.3131 -0.6491,-4.48427 -1.94768,-6.5133 -1.258,-2.06961 -3.22622,-3.93637 -5.90455,-5.60017 z m -1.15652,9.07024 c 0.8522,0 1.56249,0.3039 2.13062,0.91261 0.60871,0.56813 0.91261,1.27842 0.91261,2.13062 0,0.85219 -0.3039,1.58289 -0.91261,2.1916 -0.56813,0.56812 -1.27842,0.85214 -2.13062,0.85214 -0.85219,0 -1.58289,-0.28402 -2.1916,-0.85214 -0.56813,-0.60871 -0.85214,-1.33941 -0.85214,-2.1916 0,-0.8522 0.28401,-1.56249 0.85214,-2.13062 0.60871,-0.60871 1.33941,-0.91261 2.1916,-0.91261 z"
+                 style="text-align:center;text-anchor:middle;white-space:pre;fill:#ffffff;fill-opacity:1"
+                 /></g></g><text
+            
+             style="font-size:39.6461px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:14.8087;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+             x="34.332493"
+             y="188.03938"
+            ><tspan
+              
+              
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.6461px;font-family:Georgia;-inkscape-font-specification:Georgia;stroke:none;stroke-width:14.8087"
+               x="34.332493"
+               y="188.03938">تربوي</tspan></text></g></g></g>
+</g>
+</symbol><symbol id="logoTd" viewBox="0 0 136.397 134.3696"><g transform="translate(166.05712,-30.493706)">
+<g
+      
+      
+      
+      
+       transform="translate(-188.19435,-34.518112)"><g
+        
+         transform="translate(-15.910336,-5.7445296)"><rect
+           style="fill:#00906b;fill-opacity:1;fill-rule:nonzero;stroke-width:0.264583"
+          
+           width="134.12082"
+           height="134.12082"
+           x="38.938305"
+           y="71.005135" /><rect
+           style="opacity:0.386525;fill:url(#sradialGradient49-2);fill-rule:nonzero;stroke:none;stroke-width:0.227941;stroke-opacity:1"
+          
+           width="136.47946"
+           height="2.8768144"
+           x="-4.2837348"
+           y="160.35355"
+           transform="rotate(-15.301313)" /><rect
+           style="opacity:1;fill:url(#sradialGradient36-2);fill-rule:nonzero;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+          
+           width="41.737789"
+           height="41.737789"
+           x="38.047554"
+           y="162.75191" /><rect
+           style="fill:url(#sradialGradient36-5-8);fill-rule:nonzero;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+          
+           width="41.737789"
+           height="41.737789"
+           x="132.70679"
+           y="70.756348" /><rect
+           style="fill:url(#sradialGradient39-5);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+          
+           width="24.304626"
+           height="24.304626"
+           x="51.156994"
+           y="114.30421" /><rect
+           style="fill:url(#sradialGradient39-9-1);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+          
+           width="24.304626"
+           height="24.304626"
+           x="74.274391"
+           y="79.778923" /><rect
+           style="fill:url(#sradialGradient39-1-2);fill-rule:nonzero;stroke:none;stroke-width:0.154071;stroke-opacity:1"
+          
+           width="24.304626"
+           height="24.304626"
+           x="143.91005"
+           y="138.72565" /></g><g
+        
+         transform="translate(0,-3.1530738)"><g
+          
+           transform="matrix(0.41226697,0,0,0.41226697,117.03242,22.968922)"><g
+            
+             style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:17.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+             transform="translate(0.19949891,0.27276465)"><g
+               data-name="15_Knowleade"
+              
+               transform="matrix(3.3072917,0,0,3.3072917,-170.77752,117.40734)"
+               style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><rect
+                 height="14"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 width="2"
+                 x="57"
+                 y="9"
+                 /><rect
+                 height="14"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 width="1"
+                 x="57"
+                 y="9"
+                 /><path
+                 d="M 61,37 H 55 A 1,1 0 0 1 54,36 V 24 a 1,1 0 0 1 1,-1 h 6 a 1,1 0 0 1 1,1 v 12 a 1,1 0 0 1 -1,1 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="m 62,35 a 6,6 0 0 1 -6,-6 v -6 h -1 a 1,1 0 0 0 -1,1 v 12 a 1,1 0 0 0 1,1 h 6 a 1,1 0 0 0 1,-1 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 51,28 H 17 A 1,1 0 0 1 16,27 V 9 a 1,1 0 0 1 1,-1 h 34 a 1,1 0 0 1 1,1 v 18 a 1,1 0 0 1 -1,1 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 36,26 A 18,18 0 0 1 18,8 h -1 a 1,1 0 0 0 -1,1 v 18 a 1,1 0 0 0 1,1 h 34 a 1,1 0 0 0 1,-1 v -1 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 60,10 H 8 A 1,1 0 0 1 7,9 V 5 A 1,1 0 0 1 8,4 h 52 a 1,1 0 0 1 1,1 v 4 a 1,1 0 0 1 -1,1 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 10,8 A 1,1 0 0 1 9,7 V 4 H 8 A 1,1 0 0 0 7,5 v 4 a 1,1 0 0 0 1,1 H 60 A 1,1 0 0 0 61,9 V 8 Z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 58,56 H 12 A 6.013,6.013 0 0 1 6.024,49.4 6.185,6.185 0 0 1 12.224,44 H 58 a 1,1 0 0 1 1,1 v 10 a 1,1 0 0 1 -1,1 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 42.88,38 H 6 A 1,1 0 0 1 5,37 V 31 A 1,1 0 0 1 6,30 H 43 A 4,4 0 0 1 46.923,34.788 4.058,4.058 0 0 1 42.88,38 Z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 59,60 H 12.32 A 10.2,10.2 0 0 1 2.02,50.687 9.927,9.927 0 0 1 4.7,43.173 10.035,10.035 0 0 1 12,40 h 47 a 3,3 0 0 1 3,3 3.017,3.017 0 0 1 -3,3 H 12.22 A 4.166,4.166 0 0 0 8.02,49.6 3.969,3.969 0 0 0 9.04,52.683 4.015,4.015 0 0 0 12,54 h 47 a 3,3 0 0 1 3,3 3.017,3.017 0 0 1 -3,3 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 61,58 H 14.32 A 10.2,10.2 0 0 1 4.02,48.687 9.91,9.91 0 0 1 5.98,42.036 9.87,9.87 0 0 0 2.02,50.687 10.2,10.2 0 0 0 12.32,60 H 59 A 2.987,2.987 0 0 0 61.86,57.861 3,3 0 0 1 61,58 Z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="M 42.76,42 H 6 A 3,3 0 0 1 3,39 3.017,3.017 0 0 1 6,36 H 42.88 A 2.082,2.082 0 0 0 44.958,34.413 2,2 0 0 0 43,32 H 6 A 3,3 0 0 1 3,29 3.017,3.017 0 0 1 6,26 h 37 a 8.008,8.008 0 0 1 7.933,9.046 v 0 A 8.139,8.139 0 0 1 42.76,42 Z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><path
+                 d="m 49.009,28.723 a 7.979,7.979 0 0 0 -1.436,-1.273 8.033,8.033 0 0 1 1.36,5.6 A 8.139,8.139 0 0 1 40.76,40 H 4 A 2.943,2.943 0 0 1 3.141,39.859 2.993,2.993 0 0 0 6,42 h 36.76 a 8.139,8.139 0 0 0 8.173,-6.954 8.024,8.024 0 0 0 -1.924,-6.323 z"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 /><rect
+                 height="2"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 width="11"
+                 x="31"
+                 y="33"
+                 /><rect
+                 height="2"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 width="20"
+                 x="39"
+                 y="49"
+                 /><rect
+                 height="2"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 width="2"
+                 x="35"
+                 y="49"
+                 /><rect
+                 height="2"
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5.2611;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                 width="2"
+                 x="27"
+                 y="33"
+                 /></g></g><g
+            
+             style="stroke:url(#slinearGradient9);stroke-opacity:1"><g
+               data-name="15_Knowleade"
+              
+               transform="matrix(3.3072917,0,0,3.3072917,-170.77752,117.40734)"
+               style="stroke:url(#slinearGradient52);stroke-opacity:1"><rect
+                 height="14"
+                 style="fill:#ffffff;fill-opacity:1;stroke:url(#slinearGradient29);stroke-opacity:1"
+                 width="2"
+                 x="57"
+                 y="9"
+                 /><rect
+                 height="14"
+                 style="fill:#00e1a7;fill-opacity:1;stroke:url(#slinearGradient30);stroke-opacity:1"
+                 width="1"
+                 x="57"
+                 y="9"
+                 /><path
+                 d="M 61,37 H 55 A 1,1 0 0 1 54,36 V 24 a 1,1 0 0 1 1,-1 h 6 a 1,1 0 0 1 1,1 v 12 a 1,1 0 0 1 -1,1 z"
+                 style="fill:#00e1a7;fill-opacity:1;stroke:url(#slinearGradient31);stroke-opacity:1"
+                 /><path
+                 d="m 62,35 a 6,6 0 0 1 -6,-6 v -6 h -1 a 1,1 0 0 0 -1,1 v 12 a 1,1 0 0 0 1,1 h 6 a 1,1 0 0 0 1,-1 z"
+                 style="fill:#00906b;fill-opacity:1;stroke:url(#slinearGradient32);stroke-opacity:1"
+                 /><path
+                 d="M 51,28 H 17 A 1,1 0 0 1 16,27 V 9 a 1,1 0 0 1 1,-1 h 34 a 1,1 0 0 1 1,1 v 18 a 1,1 0 0 1 -1,1 z"
+                 style="fill:#00e1a7;fill-opacity:1;stroke:url(#slinearGradient33);stroke-opacity:1"
+                 /><path
+                 d="M 36,26 A 18,18 0 0 1 18,8 h -1 a 1,1 0 0 0 -1,1 v 18 a 1,1 0 0 0 1,1 h 34 a 1,1 0 0 0 1,-1 v -1 z"
+                 style="fill:#00906b;fill-opacity:1;stroke:url(#slinearGradient34);stroke-opacity:1"
+                 /><path
+                 d="M 60,10 H 8 A 1,1 0 0 1 7,9 V 5 A 1,1 0 0 1 8,4 h 52 a 1,1 0 0 1 1,1 v 4 a 1,1 0 0 1 -1,1 z"
+                 style="fill:#00e1a7;fill-opacity:1;stroke:url(#slinearGradient36);stroke-opacity:1"
+                 /><path
+                 d="M 10,8 A 1,1 0 0 1 9,7 V 4 H 8 A 1,1 0 0 0 7,5 v 4 a 1,1 0 0 0 1,1 H 60 A 1,1 0 0 0 61,9 V 8 Z"
+                 style="fill:#00906b;fill-opacity:1;stroke:url(#slinearGradient37);stroke-opacity:1"
+                 /><path
+                 d="M 58,56 H 12 A 6.013,6.013 0 0 1 6.024,49.4 6.185,6.185 0 0 1 12.224,44 H 58 a 1,1 0 0 1 1,1 v 10 a 1,1 0 0 1 -1,1 z"
+                 style="fill:#fdfeff;stroke:url(#slinearGradient39);stroke-opacity:1"
+                 /><path
+                 d="M 42.88,38 H 6 A 1,1 0 0 1 5,37 V 31 A 1,1 0 0 1 6,30 H 43 A 4,4 0 0 1 46.923,34.788 4.058,4.058 0 0 1 42.88,38 Z"
+                 style="fill:#fdfeff;stroke:url(#slinearGradient40);stroke-opacity:1"
+                 /><path
+                 d="M 59,60 H 12.32 A 10.2,10.2 0 0 1 2.02,50.687 9.927,9.927 0 0 1 4.7,43.173 10.035,10.035 0 0 1 12,40 h 47 a 3,3 0 0 1 3,3 3.017,3.017 0 0 1 -3,3 H 12.22 A 4.166,4.166 0 0 0 8.02,49.6 3.969,3.969 0 0 0 9.04,52.683 4.015,4.015 0 0 0 12,54 h 47 a 3,3 0 0 1 3,3 3.017,3.017 0 0 1 -3,3 z"
+                 style="fill:#00e1a7;fill-opacity:1;stroke:url(#slinearGradient42);stroke-opacity:1"
+                 /><path
+                 d="M 61,58 H 14.32 A 10.2,10.2 0 0 1 4.02,48.687 9.91,9.91 0 0 1 5.98,42.036 9.87,9.87 0 0 0 2.02,50.687 10.2,10.2 0 0 0 12.32,60 H 59 A 2.987,2.987 0 0 0 61.86,57.861 3,3 0 0 1 61,58 Z"
+                 style="fill:#00906b;fill-opacity:1;stroke:url(#slinearGradient44);stroke-opacity:1"
+                 /><path
+                 d="M 42.76,42 H 6 A 3,3 0 0 1 3,39 3.017,3.017 0 0 1 6,36 H 42.88 A 2.082,2.082 0 0 0 44.958,34.413 2,2 0 0 0 43,32 H 6 A 3,3 0 0 1 3,29 3.017,3.017 0 0 1 6,26 h 37 a 8.008,8.008 0 0 1 7.933,9.046 v 0 A 8.139,8.139 0 0 1 42.76,42 Z"
+                 style="fill:#00e1a7;fill-opacity:1;stroke:url(#slinearGradient45);stroke-opacity:1"
+                 /><path
+                 d="m 49.009,28.723 a 7.979,7.979 0 0 0 -1.436,-1.273 8.033,8.033 0 0 1 1.36,5.6 A 8.139,8.139 0 0 1 40.76,40 H 4 A 2.943,2.943 0 0 1 3.141,39.859 2.993,2.993 0 0 0 6,42 h 36.76 a 8.139,8.139 0 0 0 8.173,-6.954 8.024,8.024 0 0 0 -1.924,-6.323 z"
+                 style="fill:#00906b;fill-opacity:1;stroke:url(#slinearGradient46);stroke-opacity:1"
+                 /><rect
+                 height="2"
+                 style="fill:#dfeaef;stroke:url(#slinearGradient48);stroke-opacity:1"
+                 width="11"
+                 x="31"
+                 y="33"
+                 /><rect
+                 height="2"
+                 style="fill:#dfeaef;stroke:url(#slinearGradient49);stroke-opacity:1"
+                 width="20"
+                 x="39"
+                 y="49"
+                 /><rect
+                 height="2"
+                 style="fill:#dfeaef;stroke:url(#slinearGradient50);stroke-opacity:1"
+                 width="2"
+                 x="35"
+                 y="49"
+                 /><rect
+                 height="2"
+                 style="fill:#dfeaef;stroke:url(#slinearGradient51);stroke-opacity:1"
+                 width="2"
+                 x="27"
+                 y="33"
+                 /></g></g></g><g
+          
+           transform="translate(-5.1921191)"><g
+            
+             transform="matrix(0.33947567,0,0,0.33947567,100.65979,135.15263)"
+             style="fill:#ffffff;fill-opacity:1"><path
+               d="m 151.84861,169.21551 c -1.58264,0 -2.7595,0.38549 -3.53053,1.15652 -0.77103,0.81161 -1.31918,1.8258 -1.64383,3.04322 -0.16232,0.60871 -0.26379,1.13647 -0.30437,1.58285 -0.0317,0.38013 -0.0509,0.84669 -0.0579,1.39992 H 51.087303 l -1.82573,4.10207 H 156.47467 l 1.82624,-4.10207 h -2.86132 -1.58233 c -0.48697,0 -1.03512,-0.0408 -1.64383,-0.12196 -0.56813,-0.0406 -1.07497,-0.22312 -1.52136,-0.54777 -0.4058,-0.32464 -0.60874,-0.89267 -0.60874,-1.70429 0,-0.16232 0.0199,-0.44633 0.0605,-0.85214 0.0406,-0.36523 0.20324,-0.77111 0.48731,-1.2175 0.28406,-0.4058 0.75062,-0.68982 1.39991,-0.85214 0.56813,-0.16233 1.25803,-0.14193 2.06964,0.061 0.81161,0.2029 1.33937,0.36505 1.58285,0.48679 -0.40581,-0.93336 -1.01463,-1.58246 -1.82624,-1.94769 -0.77104,-0.32464 -1.44054,-0.48679 -2.00867,-0.48679 z"
+               style="text-align:center;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1"
+              
+               /><path
+               d="m 152.21345,117.475 -6.08697,1.33894 v 42.48836 c 0,1.4609 0.36509,2.59696 1.09554,3.40858 0.73045,0.77103 1.62329,1.27838 2.67839,1.52187 1.09568,0.24348 2.21186,0.24348 3.34812,0 1.17684,-0.24349 2.19103,-0.66977 3.04322,-1.27848 0.89278,-0.64929 1.46132,-1.42026 1.70481,-2.31303 -0.36523,0.16232 -0.87258,0.32446 -1.52187,0.48679 -0.64929,0.16232 -1.29891,0.24391 -1.9482,0.24391 -0.6493,-0.0406 -1.19693,-0.20324 -1.64332,-0.48731 -0.44638,-0.32464 -0.66972,-0.85188 -0.66972,-1.58233 z"
+               style="text-align:center;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1"
+               /><path
+               d="m 94.994718,117.475 -6.086967,1.33894 v 45.95791 c 0,0.48697 0.202942,0.83166 0.608749,1.03457 0.405807,0.2029 0.81169,0.32477 1.217497,0.36535 h 0.608748 8.52196 2.434475 13.69632 13.69581 2.43499 8.52196 0.60875 c 0.40581,-0.0406 0.81169,-0.16245 1.2175,-0.36535 0.4058,-0.20291 0.60823,-0.5476 0.60823,-1.03457 V 117.475 l -6.08697,1.33894 v 41.27086 h -4.86947 -2.43499 -5.18521 c 0.33212,-0.9647 0.49816,-1.9794 0.49816,-3.04374 0,-2.02903 -0.58843,-3.83459 -1.76527,-5.41724 -1.17684,-1.62323 -2.6785,-2.71901 -4.50464,-3.28714 -0.4058,-0.16232 -0.89276,-0.46673 -1.46089,-0.91312 -0.52755,-0.48697 -0.95331,-1.33901 -1.27796,-2.55643 -0.28406,1.21742 -0.68994,2.06946 -1.21749,2.55643 -0.48697,0.44639 -0.95353,0.7304 -1.39992,0.85214 -1.86671,0.56813 -3.40917,1.66391 -4.62659,3.28714 -1.21742,1.58265 -1.82573,3.40861 -1.82573,5.47822 0,1.06434 0.16604,2.07904 0.49816,3.04374 h -5.12475 -2.434475 -4.869987 z m 21.000782,36.52232 c 0.8522,0 1.56198,0.30441 2.13011,0.91312 0.60871,0.56813 0.91312,1.27843 0.91312,2.13062 0,0.85219 -0.30441,1.58289 -0.91312,2.1916 -0.56813,0.56813 -1.27791,0.85214 -2.13011,0.85214 -0.85219,0 -1.58288,-0.28401 -2.19159,-0.85214 -0.56813,-0.60871 -0.85215,-1.33941 -0.85215,-2.1916 0,-0.85219 0.28402,-1.56249 0.85215,-2.13062 0.60871,-0.60871 1.3394,-0.91312 2.19159,-0.91312 z"
+               style="text-align:center;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1"
+               /><path
+               d="m 78.011776,144.92759 c -0.324646,0.36522 -0.649456,0.75071 -0.974101,1.15652 -0.324645,0.4058 -0.588263,1.01463 -0.791166,1.82624 -1.542066,0.0812 -2.96214,0.54772 -4.260722,1.39992 -1.298582,0.85219 -2.333687,1.94797 -3.10472,3.28713 -0.730452,1.33917 -1.09554,2.82043 -1.09554,4.44366 0,1.06434 0.166036,2.07904 0.49816,3.04374 h -7.437789 c -0.730452,0 -1.501423,-0.20294 -2.313037,-0.60875 -0.811613,-0.4058 -1.419921,-1.01463 -1.825728,-1.82624 l -5.113383,8.52196 h 25.261507 c 1.663808,0 3.165472,-0.40588 4.504635,-1.2175 1.379743,-0.81161 2.475007,-1.90739 3.286621,-3.28714 0.811613,-1.42032 1.217497,-2.96226 1.217497,-4.62607 0,-2.3131 -0.649103,-4.48426 -1.947685,-6.5133 -1.258001,-2.06961 -3.226224,-3.93636 -5.904549,-5.60017 z m -1.156519,9.06973 c 0.852194,0 1.56249,0.30441 2.130619,0.91312 0.608711,0.56813 0.913123,1.27843 0.913123,2.13062 0,0.85219 -0.304412,1.58289 -0.913123,2.1916 -0.568129,0.56813 -1.278425,0.85214 -2.130619,0.85214 -0.852194,0 -1.582887,-0.28401 -2.191597,-0.85214 -0.56813,-0.60871 -0.852145,-1.33941 -0.852145,-2.1916 0,-0.85219 0.284015,-1.56249 0.852145,-2.13062 0.60871,-0.60871 1.339403,-0.91312 2.191597,-0.91312 z"
+               style="text-align:center;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1"
+               /><g
+              
+               transform="matrix(1,0,0,-1,0,203.64857)"
+               style="fill:#ffffff;fill-opacity:1"><path
+                 d="m 152.21288,77.475908 -6.08696,1.33893 v 42.488352 c 0,0.81397 6.08696,0.89551 6.08696,0 z"
+                 style="text-align:center;text-anchor:middle;white-space:pre;fill:#ffffff;fill-opacity:1"
+                
+                 /><path
+                 d="m 94.994157,77.475908 -6.08696,1.33893 v 45.957902 c 0,0.48697 0.20294,0.83166 0.60874,1.03456 0.40581,0.20291 0.81169,0.32478 1.2175,0.36536 h 0.60875 8.52196 2.434473 13.69632 13.6958 2.435 8.52196 0.60823 c 0.40581,-0.0406 0.81169,-0.16245 1.2175,-0.36536 0.4058,-0.2029 0.60874,-0.54759 0.60874,-1.03456 V 77.475908 l -6.08696,1.33893 v 41.270852 h -4.86947 -2.435 -5.18521 c 0.33212,-0.9647 0.49816,-1.97941 0.49816,-3.04374 0,-2.02904 -0.58843,-3.8346 -1.76527,-5.41724 -1.17684,-1.62323 -2.6785,-2.71901 -4.50463,-3.28714 -0.40581,-0.16232 -0.89276,-0.46674 -1.46089,-0.91312 -0.52755,-0.48697 -0.95332,-1.33902 -1.27796,-2.55644 -0.28407,1.21742 -0.68995,2.06947 -1.2175,2.55644 -0.48697,0.44638 -0.95353,0.7304 -1.39991,0.85214 -1.86671,0.56813 -3.40917,1.66391 -4.62659,3.28714 -1.21742,1.58265 -1.82625,3.4086 -1.82625,5.47822 0,1.06433 0.16655,2.07904 0.49868,3.04374 h -5.12475 -2.434473 -4.86999 z m 21.000783,36.522812 c 0.85219,0 1.56197,0.3039 2.1301,0.91261 0.60871,0.56813 0.91312,1.27842 0.91312,2.13062 0,0.85219 -0.30441,1.58289 -0.91312,2.1916 -0.56813,0.56812 -1.27791,0.85214 -2.1301,0.85214 -0.8522,0 -1.58289,-0.28402 -2.1916,-0.85214 -0.56813,-0.60871 -0.85214,-1.33941 -0.85214,-2.1916 0,-0.8522 0.28401,-1.56249 0.85214,-2.13062 0.60871,-0.60871 1.3394,-0.91261 2.1916,-0.91261 z"
+                 style="text-align:center;text-anchor:middle;white-space:pre;fill:#ffffff;fill-opacity:1"
+                 /><path
+                 d="m 78.011217,104.92848 c -0.32465,0.36522 -0.64946,0.75071 -0.9741,1.15651 -0.32465,0.40581 -0.58826,1.01464 -0.79117,1.82625 -1.54206,0.0812 -2.96265,0.54772 -4.26124,1.39991 -1.29858,0.8522 -2.33317,1.94798 -3.1042,3.28714 -0.73045,1.33916 -1.09554,2.82043 -1.09554,4.44366 0,1.06433 0.16604,2.07904 0.49816,3.04374 h -7.43779 c -0.73045,0 -1.50142,-0.20294 -2.31303,-0.60875 -0.81162,-0.40581 -1.42044,-1.01463 -1.82625,-1.82624 l -5.11287,8.52196 h 25.26151 c 1.66381,0 3.16496,-0.40589 4.50412,-1.2175 1.37974,-0.81161 2.47552,-1.90739 3.28714,-3.28714 0.81161,-1.42032 1.21749,-2.96226 1.21749,-4.62607 0,-2.3131 -0.6491,-4.48427 -1.94768,-6.5133 -1.258,-2.06961 -3.22622,-3.93637 -5.90455,-5.60017 z m -1.15652,9.07024 c 0.8522,0 1.56249,0.3039 2.13062,0.91261 0.60871,0.56813 0.91261,1.27842 0.91261,2.13062 0,0.85219 -0.3039,1.58289 -0.91261,2.1916 -0.56813,0.56812 -1.27842,0.85214 -2.13062,0.85214 -0.85219,0 -1.58289,-0.28402 -2.1916,-0.85214 -0.56813,-0.60871 -0.85214,-1.33941 -0.85214,-2.1916 0,-0.8522 0.28401,-1.56249 0.85214,-2.13062 0.60871,-0.60871 1.33941,-0.91261 2.1916,-0.91261 z"
+                 style="text-align:center;text-anchor:middle;white-space:pre;fill:#ffffff;fill-opacity:1"
+                 /></g></g><path
+             d="m 85.401112,160.53421 c -0.291447,0.69219 -0.510032,1.40867 -0.655756,2.14943 -0.145723,0.72861 -0.218585,1.51188 -0.218585,2.34979 l 0.947203,0.45539 2.167637,15.44669 h -5.883587 v -1.27508 c 0,-2.16157 -0.163939,-3.70988 -0.491817,-4.64494 -0.218585,-0.61932 -0.765048,-1.48152 -1.639389,-2.5866 l -1.420805,2.96913 c 0.910773,0.98363 1.481523,1.73653 1.712252,2.25871 0.340022,0.7529 0.510032,1.84583 0.510032,3.27878 h -7.777992 c 0,-0.8622 -0.33395,-1.98549 -1.001849,-3.36986 -0.497889,-1.02007 -1.165788,-2.16763 -2.003698,-3.44272 -0.813623,0.1943 -1.706179,0.64361 -2.67767,1.34795 -1.080783,0.78933 -1.991554,1.71832 -2.732315,2.78696 -0.546463,0.78933 -1.153644,1.40259 -1.821544,1.83976 -0.862197,0.5586 -1.845831,0.83791 -2.950901,0.83791 h -1.511881 -1.275081 -1.912621 c -1.020065,0 -1.991555,0.13965 -2.91447,0.41895 -1.226507,0.37645 -2.204069,0.95328 -2.932686,1.73047 -0.886485,0.95935 -1.329727,2.19193 -1.329727,3.69773 0,0.40074 0.163939,0.70433 0.491817,0.91077 0.327878,0.19431 0.874341,0.29145 1.639389,0.29145 0.218585,0 0.673972,0.0243 1.366158,0.0728 0.70433,0.0364 1.220435,0.0729 1.548312,0.10929 0.425027,0 0.728618,0.0546 0.910773,0.16394 0.182153,0.0971 0.273231,0.24894 0.273231,0.45538 0,0.57076 -0.813623,1.02007 -2.440869,1.34795 -1.323655,0.26716 -2.853752,0.40074 -4.590291,0.40074 -2.586591,0 -4.620649,-0.37038 -6.102171,-1.11114 -1.554384,-0.7772 -2.331576,-1.91262 -2.331576,-3.40629 0,-0.85005 0.346093,-1.94298 1.03828,-3.27878 0.449314,-0.77719 0.9047,-1.56046 1.366158,-2.34979 l -0.728618,-0.36431 c -1.190075,1.87012 -1.924764,3.09056 -2.204068,3.6613 -0.777192,1.57868 -1.165788,3.07235 -1.165788,4.481 0,1.74868 0.819695,3.09663 2.459084,4.04383 1.542241,0.88649 3.618801,1.32973 6.22968,1.32973 3.752381,0 6.442193,-0.56468 8.06944,-1.69404 1.493665,-1.03221 2.240498,-2.68374 2.240498,-4.9546 0,-0.44931 -0.176082,-0.76505 -0.528248,-0.9472 -0.218585,-0.1093 -0.619324,-0.20037 -1.202218,-0.27323 -0.983634,-0.1093 -1.621174,-0.17609 -1.912621,-0.20037 -0.291447,-0.0243 -0.686115,-0.0364 -1.184004,-0.0364 -1.129357,0 -1.694036,-0.20037 -1.694036,-0.6011 0,-0.29145 0.46753,-0.48575 1.402589,-0.5829 0.947203,-0.0971 2.355863,-0.14572 4.225982,-0.14572 h 1.912621 1.275081 1.566527 c 1.408661,0 2.4773,-0.16394 3.205917,-0.49182 0.740761,-0.34002 1.463307,-0.94113 2.167638,-1.80333 0.898628,0.74076 1.936908,1.32365 3.114839,1.74868 1.020065,0.36431 1.936909,0.54647 2.750531,0.54647 h 0.619325 1.275081 7.832638 1.275081 6.448265 1.275081 0.364309 c 1.627246,0 3.078409,-0.24895 4.35349,-0.74683 1.044351,-0.40075 1.973339,-0.96542 2.786961,-1.69404 0.437171,0.80148 1.141501,1.42687 2.112991,1.87619 0.813624,0.37645 1.615099,0.56468 2.404439,0.56468 h 1.40259 1.27508 9.10772 v -4.44457 c 0,-2.16156 -0.16394,-3.70988 -0.49182,-4.64494 -0.21859,-0.61932 -0.76505,-1.48152 -1.63939,-2.58659 l -1.4208,2.96912 c 0.91077,0.98363 1.48152,1.73653 1.71225,2.25871 0.34002,0.75291 0.51003,1.84583 0.51003,3.27878 h -7.77799 -1.27508 -1.40259 c -0.37645,0 -0.84398,-0.0971 -1.40259,-0.29145 -0.546463,-0.19429 -0.916843,-0.43716 -1.111141,-0.72861 0.874341,-0.72862 1.475451,-1.29937 1.803331,-1.71226 0.44931,-0.5586 0.67397,-1.09899 0.67397,-1.62117 0,-0.98363 -0.56468,-1.71225 -1.694038,-2.18585 -0.862197,-0.36431 -1.97941,-0.54646 -3.35164,-0.54646 -1.590815,0 -2.708028,0.22465 -3.351641,0.67396 -0.70433,0.4979 -1.056495,1.41474 -1.056495,2.75054 v 1.07471 h 0.382524 c 0.206442,-0.26716 0.394668,-0.43717 0.564679,-0.51003 0.170011,-0.085 0.364309,-0.12751 0.582894,-0.12751 0.485745,0 0.922915,0.23073 1.311511,0.69218 l 0.765049,0.98364 c -0.959347,0.5586 -1.936908,0.96541 -2.932686,1.22043 -0.874341,0.21859 -1.821544,0.32788 -2.841608,0.32788 H 89.48137 v -0.40074 l -2.149422,-14.2809 0.874341,0.29144 c 0.13358,-0.34002 0.248945,-0.85612 0.346094,-1.54831 0.09715,-0.69219 0.145723,-1.34187 0.145723,-1.94905 -0.619325,-0.24287 -1.232578,-0.48575 -1.839759,-0.72862 -0.789336,-0.35216 -1.184004,-0.88041 -1.184004,-1.58474 z m 24.791208,4.02562 -1.36615,2.60481 2.9509,1.56652 1.4208,-2.62302 z m -4.17133,1.65761 -1.34794,2.64124 2.9509,1.53009 1.38437,-2.64124 z M 68.71577,176.6731 c 0.461458,0.60718 0.831839,1.19614 1.111142,1.76689 0.327878,0.68004 0.570751,1.37223 0.728618,2.07657 l -0.16394,0.2368 c -0.704329,-0.085 -1.457235,-0.31574 -2.258714,-0.69219 -0.789336,-0.37645 -1.402589,-0.80148 -1.839759,-1.27508 0.364309,-0.60718 0.680043,-1.03829 0.947203,-1.2933 0.40074,-0.40074 0.892556,-0.67397 1.47545,-0.81969 z m 9.945629,9.52667 -1.366157,2.60481 2.950901,1.56652 1.420804,-2.62302 z m -4.171335,1.6576 -1.347942,2.64124 2.950901,1.5301 1.384373,-2.64124 z m -29.927964,6.4847 -1.694036,1.71225 2.11299,1.2933 1.657605,-1.56653 z m 3.752379,0 -1.639389,1.71225 2.040129,1.2933 1.694036,-1.56653 z"
+             style="font-size:50.8px;font-family:'DejaVu Math TeX Gyre';-inkscape-font-specification:'DejaVu Math TeX Gyre';letter-spacing:0px;word-spacing:0px;opacity:1;fill:#ffffff;fill-rule:evenodd;stroke-width:12.7778;stroke-linecap:round;stroke-linejoin:round"
+             /></g></g></g>
+</g>
+</symbol></svg>
+
+<nav class="nav" id="top">
+  <div class="bar">
+    <div class="container navin">
+      <a class="brand" href="#top" aria-label="إلمام — الرئيسية">
+        <span class="brand-mark"><svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoProject"/></svg>
+        </span>
+        <span class="brand-name">إلم<b>ام</b></span>
+      </a>
+      <div class="links">
+        <a href="#story">عن المشروع</a>
+        <a href="#apps">التطبيقات</a>
+        <a href="#how">كيفية الاستخدام</a>
+        <a href="#door">باب الحصة</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn primary" href="#download" style="padding:11px 20px;font-size:14px">ابدأ الآن ↗</a>
+        <button class="hamburger" id="burger" aria-label="فتح القائمة" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#story">عن المشروع</a>
+    <a href="#apps">التطبيقات</a>
+    <a href="#how">كيفية الاستخدام</a>
+    <a href="#door">باب الحصة</a>
+    <a href="#download">ابدأ الآن</a>
+  </div>
+</nav>
+
+<main>
+  <!-- ============ الواجهة ============ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> منظومة تعليمية عربية · تطبيقان متكاملان</span>
+          <h1>الأداة الأهم<br>للدرس <span class="grad">الحي</span></h1>
+          <p class="lead">الأستاذ يفتح بابه، والتلميذ يدخل في وقته. إلمام يجمع الفوج والجدول والتنبيه والحضور والتقييم — في مكان واحد.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#download">انضم إلى الفوج الآن
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m6-6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn ghost" href="#story">اكتشف المشروع</a>
+          </div>
+          <div class="platform-note">
+            <span class="os">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18V6c0-.6.5-1 1-1h10c.6 0 1 .4 1 1v12c0 .6-.4 1-1 1H7c-.5 0-1-.4-1-1Zm3.2-3.4 6-4.6-6-4.6v9.2Z"/></svg>
+              Android 8+ مدعوم من الآن
+            </span>
+            <span>· · · iOS قريباً</span>
+          </div>
+        </div>
+
+        <div class="stage" aria-hidden="true">
+          <div class="glow"></div>
+          <!-- تطبيق التلميذ -->
+          <div class="phone phone-student">
+            <div class="bar"><span class="notch"></span></div>
+            <div class="screen">
+              <div class="app-top">
+                <span class="am sp" style="display:grid;place-items:center">
+                  <svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTd"/></svg>
+                </span>
+                <div style="flex:1"><div class="ttl">إلمام تعليمي</div><div class="on">● متصل</div></div>
+                <span class="pill soft">الدرس القادم</span>
+              </div>
+              <div class="sheet">
+                <div class="row"><span class="subject">الروابط التساهمية</span><span class="counter" id="countdown">00:24:18</span></div>
+                <div class="meta">كيمياء · الأستاذ أحمد · 14:30</div>
+              </div>
+              <div class="sheet">
+                <div class="row" id="doorRow"><span class="subject">فوج الرواد</span><span class="pill wait" id="doorPill">◷ بانتظار الفتح</span></div>
+                <div class="meta" id="doorMeta">بانتظار موافقة الأستاذ على الدخول..</div>
+              </div>
+              <div class="big-cta">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3a4 4 0 0 0-4 4v3H6.5A1.5 1.5 0 0 0 5 11.5v8A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 17.5 10H16V7a4 4 0 0 0-4-4Zm3 7H9V7a3 3 0 0 1 6 0v3Z" fill="#fff"/></svg>
+                دخول الدرس
+              </div>
+            </div>
+          </div>
+          <!-- تطبيق الأستاذ -->
+          <div class="phone phone-teacher">
+            <div class="bar"><span class="notch"></span></div>
+            <div class="screen">
+              <div class="app-top">
+                <span class="am tc" style="display:grid;place-items:center">
+                  <svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTc"/></svg>
+                </span>
+                <div style="flex:1"><div class="ttl">إلمام تربوي</div><div class="on">● متصل</div></div>
+                <span class="pill ok">الحصة جارية</span>
+              </div>
+              <div class="sheet">
+                <div class="row"><span class="subject">الحصة القادمة</span><span class="pill soft">14:30</span></div>
+                <div class="meta">الروابط التساهمية · فوج الرواد</div>
+              </div>
+              <div class="sheet">
+                <div class="row"><span class="subject">حاضرون</span><span class="pill ok">12</span></div>
+                <div class="row" style="margin-top:8px"><span class="subject">بانتظار الموافقة</span><span class="pill wait">3</span></div>
+              </div>
+              <div class="big-cta" style="background:var(--grad-deep)">إدارة الحصة · افتح الباب</div>
+            </div>
+          </div>
+          <!-- شارات عائمة -->
+          <div class="float-chip notif">
+            <span class="ic" style="background:rgba(18,165,184,.14);color:var(--primary);display:grid;place-items:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 9a6 6 0 0 0-12 0v5l-2 3h16l-2-3V9Zm-6 10a2.5 2.5 0 0 1-2.4-2h4.8a2.5 2.5 0 0 1-2.4 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <div><div style="font-size:11.5px;color:var(--muted)">قبل الدرس بـ</div><div>30 دقيقة · تنبيهك وصل</div></div>
+          </div>
+          <div class="float-chip door">
+            <span class="ic" style="background:rgba(22,169,111,.14);color:var(--success);display:grid;place-items:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 20V5.5A1.5 1.5 0 0 1 6.5 4H13v16H5Zm8 0h6v-9a3 3 0 0 0-3-3h-3v12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <div><div style="font-size:11.5px;color:var(--muted)">باب الحصة</div><div style="color:var(--success);font-weight:900">مقبول للدخول ✓</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-strip">
+        <div class="hs reveal"><span class="n">2</span><span class="t">تطبيقان يعملان بانسجام: أستاذٌ وتلميذ</span></div>
+        <div class="hs reveal d1"><span class="n">1</span><span class="t">باب موحّد للدخول: مقبول أو بانتظار أو مرفوض</span></div>
+        <div class="hs reveal d2"><span class="n">4</span><span class="t">طرق للوصول إلى الدرس: التنبيه، البطاقة، الجدول، الباب</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ القصة ============ -->
+  <section class="section alt" id="story">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-tag">عن المشروع</span>
+        <h2>وضوح الطلب.. قبل الإبهار</h2>
+        <p>فكرة «إلمام» وُلدت من يومٍ متعب لمعلّم: جدول مشتّت، روابط تضيع بين الرسائل، وحضورٌ يُسجَّل يدوياً. أردنا للحصّة أن تُفتَح بابه، لا أن يُبحث عن رابطٍ في دردشة.</p>
+      </div>
+      <div class="grid3">
+        <article class="card reveal">
+          <span class="icon-tile teal">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 19V6.5A1.5 1.5 0 0 1 5.5 5h13A1.5 1.5 0 0 1 20 6.5V19H4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 5v14M8 9h2m4 0h2M8 12h2m4 0h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+          <h3>منظومة واحدة</h3>
+          <p>تطبيقان يعملان بانسجام لتنظيم علاقة الأستاذ بطلبته: الدارسون أفرادٌ، والعلاقة حقيقية — لا أداة مؤسسة باردة.</p>
+        </article>
+        <article class="card reveal d1">
+          <span class="icon-tile coral">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="7.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 9.5V13l2.4 1.6M9.5 3h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <h3>تنبيه في وقته</h3>
+          <p>إشعارٌ مجدول محلياً قبل الحصة بوقتٍ تختاره أنت: 15 أو 30 أو 60 دقيقة — لا خادم دفعٍ مركزي.</p>
+        </article>
+        <article class="card reveal d2">
+          <span class="icon-tile green">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <h3>حضور وتقييم ومساءلة</h3>
+          <p>سجلّ حضورٍ موحّد لكل حصّة، وسماحُ حضورٍ ذكي، وتقييمٌ من طرف التلميذ، وفوترةُ اشتراكٍ صادقة بحدودٍ معلنة.</p>
+        </article>
+      </div>
+
+      <div class="quote reveal">
+        <p>«الحصّة الفعلية في مكان واحد: الأستاذ يفتح بابه، والتلميذ يدخل في وقته. صدقٌ في الحالة — المعلّقُ يُرى معلّقاً، والمرفوضُ يعرف لماذا — قبل أي إبهار.»</p>
+        <div class="who"><span class="line"></span> رؤية المنتج · «إلمام»</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ التطبيقات ============ -->
+  <section class="section" id="apps">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-tag">التطبيقات</span>
+        <h2>تطبيقان.. تجربة واحدة</h2>
+        <p>لكل طرفٍ أدواته وواجهته وبابه الخاص — لكن بقصةٍ واحدة تخدم الدرس الحي.</p>
+      </div>
+
+      <div class="grid2">
+        <article class="card app-card reveal">
+          <span class="bigmark">
+            <svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTc"/></svg>
+          </span>
+          <div>
+            <span class="role teacher">للأستاذ · إدارة</span>
+            <h3>إلمام تربوي</h3>
+            <p class="desc">بيتك الذي تدير به فوجك: من إنشاء الفوج برمزٍ وباركود، إلى جدولٍ أسبوعي، وبابِ حصّةٍ تحكمه بنفسك.</p>
+            <div class="feats">
+              <span class="feat"><span class="ck t"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>أفواج ورمز انضمام</span>
+              <span class="feat"><span class="ck t"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>جدول أسبوعي وقواعد</span>
+              <span class="feat"><span class="ck t"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>إدارة الحصة: وضع + رابط</span>
+              <span class="feat"><span class="ck t"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>لوحة حاضرون/معلّقون</span>
+              <span class="feat"><span class="ck t"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>طلبات وحجوزات وقرارات</span>
+              <span class="feat"><span class="ck t"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>فوترة اشتراك بحدود معلنة</span>
+            </div>
+            <div class="screens">
+              <span class="chip-screen">الرئيسية وبطاقة الحصة</span><span class="chip-screen">الجدول</span><span class="chip-screen">إدارة الحصة</span><span class="chip-screen">الطلبات والقرارات</span><span class="chip-screen">التلاميذ</span><span class="chip-screen">الفوترة</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card app-card reveal d1">
+          <span class="bigmark">
+            <svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTd"/></svg>
+          </span>
+          <div>
+            <span class="role student">للتلميذ · تعلّم</span>
+            <h3>إلمام تعليمي</h3>
+            <p class="desc">انضم برمزٍ من أستاذك ودروسك كلها في جيبك: تنبيهٌ في وقته، وبابُ دخولٍ واضح، وجدولٌ وغيابٌ وتقييم.</p>
+            <div class="feats">
+              <span class="feat"><span class="ck s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>انضمام برمز أو باركود</span>
+              <span class="feat"><span class="ck s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>تنبيه بنافذة 15/30/60</span>
+              <span class="feat"><span class="ck s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>صفحة الدرس + دخول الروابط</span>
+              <span class="feat"><span class="ck s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>جدولي وحالة الباب</span>
+              <span class="feat"><span class="ck s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>حجوزاتي من دليل الأساتذة</span>
+              <span class="feat"><span class="ck s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>تقييم الحصّة وغيابك</span>
+            </div>
+            <div class="screens">
+              <span class="chip-screen">الرئيسية وبطاقة الدرس</span><span class="chip-screen">صفحة الدرس</span><span class="chip-screen">جدولي</span><span class="chip-screen">حجوزاتي</span><span class="chip-screen">الدليل</span><span class="chip-screen">حسابي</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ كيفية الاستخدام ============ -->
+  <section class="section alt" id="how">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-tag">كيفية الاستخدام</span>
+        <h2>ثلاث خطوات.. في كل رحلة</h2>
+        <p>بدايةٌ بسيطة من إنشاء الفوج أو الانضمام إليه، حتى لحظة دخول الحصّة.</p>
+      </div>
+
+      <div class="journeys">
+        <div class="journey reveal">
+          <div class="jh">
+            <span class="tag"><svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTc"/></svg></span>
+            <div><div class="who">رحلة الأستاذ</div><h3>إلمام تربوي</h3></div>
+          </div>
+          <div class="jstep">
+            <span class="snum">1</span>
+            <div><h4>أنشئ فوجاً ورمزاً</h4><p>حدّد مادّتك وسعة الفوج، وشارك رمزَ الانضمام أو الباركود مع تلاميذك.</p></div>
+          </div>
+          <div class="jstep">
+            <span class="snum">2</span>
+            <div><h4>اضبط جدولك الأسبوعي</h4><p>حصصٌ استثنائية أو قواعدَ أسبوعية — ليتلقّى التلاميذ التنبيهات آلياً.</p></div>
+          </div>
+          <div class="jstep">
+            <span class="snum">3</span>
+            <div><h4>أدر الحصّة وافتح الباب</h4><p>حدّد الوضع (حضورية/أونلاين)، ضع الرابط، وسمح للطلاب بالدخول من لوحة «حاضرون/معلّقون».</p></div>
+          </div>
+        </div>
+
+        <div class="journey reveal d1">
+          <div class="jh">
+            <span class="tag"><svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTd"/></svg></span>
+            <div><div class="who">رحلة التلميذ</div><h3>إلمام تعليمي</h3></div>
+          </div>
+          <div class="jstep">
+            <span class="snum">1</span>
+            <div><h4>انضم بالرمز أو الباركود</h4><p>امسح الكود من أستاذك (أو احجز مقعداً من الدليل) لتظهر دروسك فوراً.</p></div>
+          </div>
+          <div class="jstep">
+            <span class="snum">2</span>
+            <div><h4>اضبط نافذة التنبيه</h4><p>اختر أن يُنبّهك التطبيق قبل الدرس بـ 15 أو 30 أو 60 دقيقة.</p></div>
+          </div>
+          <div class="jstep">
+            <span class="snum">3</span>
+            <div><h4>ادخل الدرس عند التنبيه</h4><p>اضغط التنبيه فتفتح صفحة «الدرس»: غلاف وعدّاد وزرّ دخول يوصلك إلى زوم أو تيليغرام أو يوتيوب.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دورة اليوم -->
+      <div style="margin-top:70px">
+        <div class="sec-head reveal" style="margin-bottom:44px">
+          <h2 style="font-size:clamp(24px,3.4vw,34px)">دورة يوم الحصّة</h2>
+          <p style="font-size:15px">من فتح الباب إلى الرصد والتقييم — قصة الدرس الحي كاملة.</p>
+        </div>
+        <div class="timeline">
+          <article class="card tl-card reveal">
+            <span class="phase" style="background:var(--grad-deep)"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M5 20V5.5A1.5 1.5 0 0 1 6.5 4H13v16H5Zm8 0h6v-9a3 3 0 0 0-3-3h-3v12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+            <h4>فتح الباب</h4><p>يفتح الأستاذ «إدارة الحصّة»: الوضع والرابط ثم يحدّث الباب.</p>
+          </article>
+          <article class="card tl-card reveal d1">
+            <span class="phase" style="background:var(--grad)"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M18 9a6 6 0 0 0-12 0v5l-2 3h16l-2-3V9Zm-6 10a2.5 2.5 0 0 1-2.4-2h4.8a2.5 2.5 0 0 1-2.4 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+            <h4>تنبيهٌ ذكي</h4><p>يصل التلميذ إشعارُ «الدرس يبدأ قريباً» في النافذة التي اختارها.</p>
+          </article>
+          <article class="card tl-card reveal d2">
+            <span class="phase" style="background:var(--accent)"><svg class="ic" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7L8 5Z"/></svg></span>
+            <h4>دخول الحصّة</h4><p>غلافٌ وعدّاد تنازلي وبابُ دخول موحّد — الرابط للحاضرين المقبولين.</p>
+          </article>
+          <article class="card tl-card reveal d3">
+            <span class="phase" style="background:var(--success)"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h4>الرصد والتقييم</h4><p>حضورٌ يُسجَّل بنهاية موحّدة، ثم تقييمُ الحصّة من طرف التلميذ.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ باب الحصة ============ -->
+  <section class="section" id="door">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-tag">باب الحصّة</span>
+        <h2>ثلاث حالات.. بلغة لا تخطئ</h2>
+        <p>لون يجذب العين، ورموزٌ تُقرأ — المعلَّمون لا يتساءلون.</p>
+      </div>
+      <div class="doors">
+        <article class="door wait reveal">
+          <span class="ring"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3.2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <h4>بانتظار الموافقة</h4>
+          <p>طلبُ الدخول أُرسل، والقرارُ بيد الأستاذ — الحالة ظاهرة، لا وهمَ بالنجاح.</p>
+          <div class="mirror">◷ حالة افتراضية عند غياب قرار الأستاذ</div>
+        </article>
+        <article class="door ok reveal d1">
+          <span class="ring"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M20 7 9.5 17.5 4 12" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h4>مقبول للدخول</h4>
+          <p>فُتح لك الباب: زرّ «دخول الدرس» مفعّل، والرابط ظاهر للحاضرين المقبولين.</p>
+          <div class="mirror">✓ يظهر زرّ الدخول في النافذة المحددة</div>
+        </article>
+        <article class="door no reveal d2">
+          <span class="ring"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M9 9l6 6m0-6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+          <h4>مرفوض</h4>
+          <p>قرارٌ صريح بلا التباس: سببٌ واضح، ولا استهلاك خفيّ لحدود السماح.</p>
+          <div class="mirror">× لا دخول — بيانٌ واضح بالسبب</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ القيمة الأمنية ============ -->
+  <section class="section alt" id="trust">
+    <div class="container">
+      <div class="grid3">
+        <article class="card reveal">
+          <span class="icon-tile teal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3 5 5.5v5c0 4.5 3 8 7 9.5 4-1.5 7-5 7-9.5v-5L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h3>روابط آمنة موثوقة</h3>
+          <p>الرابط يُتحقَّق منه عند الحفظ: نطاقات زوم وتيليغرام ويوتيوب فقط، ويُفتح خارجياً — لا مفاجآت داخل التطبيق.</p>
+        </article>
+        <article class="card reveal d1">
+          <span class="icon-tile green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <h3>الخصوصية أساساً</h3>
+          <p>يرى التلميذ جدوله وحضوره وبابه فقط — والإشعارات محلية على جهازه، بلا مرورٍ عبر خوادم دفع.</p>
+        </article>
+        <article class="card reveal d2">
+          <span class="icon-tile coral"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m12 8-2 4h4l-2 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg></span>
+          <h3>فاتر للأداء</h3>
+          <p>زمن حقيقي دون ضوضاء: الحضور مسؤولية لا تخضع للطلب العشوائي، والقرارات موحّدة بمنطق واحد صارم.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ التحميل ============ -->
+  <section class="section" id="download">
+    <div class="container">
+      <div class="dl-zone">
+        <div class="inner reveal">
+          <h2>ابدأ تجربتك الحيّة الآن</h2>
+          <p class="lead">أستاذاً يدير فوجه، أو تلميذاً ينشد التنظيم — حمّل تطبيقك وادخل في لحظة الحصّة الحقيقية.</p>
+          <div class="dl-note">
+            <svg style="display:inline-block;vertical-align:-2px" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18V6c0-.6.5-1 1-1h10c.6 0 1 .4 1 1v12c0 .6-.4 1-1 1H7c-.5 0-1-.4-1-1Z"/></svg>
+            متوفّر على Android من الآن · أصدار iOS في الطريق
+          </div>
+        </div>
+        <div class="dl-cards reveal d1">
+          <a class="dl-app" href="#" onclick="notice(event,'رابط تحميل إلمام تربوي يُضاف هنا')">
+            <span class="dm"><svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTc"/></svg></span>
+            <span><span class="t1">إلمام تربوي</span><br><span class="t2">للأستاذ · إدارة الفوج والحصص</span></span>
+            <span class="go">Google Play
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <a class="dl-app" href="#" onclick="notice(event,'رابط تحميل إلمام تعليمي يُضاف هنا')">
+            <span class="dm"><svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTd"/></svg></span>
+            <span><span class="t1">إلمام تعليمي</span><br><span class="t2">للتلميذ · الدرس والجدول والتنبيه</span></span>
+            <span class="go">Google Play
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <span class="brand-mark"><svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoProject"/></svg>
+          </span>
+          <span class="brand-name">إلم<b>ام</b></span>
+        </a>
+        <p class="footer-note">منظومة تعليمية عربية للدرس الحي: أستاذٌ يفتح بابه، وتلميذٌ يدخل في وقته.</p>
+      </div>
+      <div class="foot-col">
+        <h5>استكشف</h5>
+        <a href="#story">عن المشروع</a>
+        <a href="#apps">التطبيقات</a>
+        <a href="#how">كيفية الاستخدام</a>
+        <a href="#door">باب الحصّة</a>
+      </div>
+      <div class="foot-col">
+        <h5>التحميل</h5>
+        <a href="#download">إلمام تربوي (الأستاذ)</a>
+        <a href="#download">إلمام تعليمي (التلميذ)</a>
+        <a href="#trust">الخصوصية والأمان</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 إلمام — جميع الحقوق محفوظة. صُنع بحبٍ للدرس الحيّ.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* شريط علوي بظل عند التمرير */
+  var nav = document.querySelector('.nav');
+  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* قائمة الجوال */
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', function(){
+    var open = menu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ menu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); });
+  });
+
+  /* ظهور عند التمرير */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:.14, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* عداد تنازلي حي في الموكب */
+  var hint = document.getElementById('countdown');
+  if(hint && !reduced){
+    var total = 24*60+18, last = Date.now();
+    setInterval(function(){
+      var now = Date.now();
+      total -= Math.floor((now - last)/1000);
+      last = now;
+      if(total < 0){ total = 24*60+59; }
+      var h = String(Math.floor(total/3600)).padStart(2,'0');
+      var m = String(Math.floor(total%3600/60)).padStart(2,'0');
+      var s = String(total%60).padStart(2,'0');
+      hint.textContent = h+':'+m+':'+s;
+    }, 1000);
+  }
+
+  /* دورة حالة الباب في الموكب */
+  var doorPill = document.getElementById('doorPill');
+  var doorMeta = document.getElementById('doorMeta');
+  if(doorPill && !reduced){
+    var states = [
+      {pill:'◷ بانتظار الفتح', cls:'wait', meta:'بانتظار موافقة الأستاذ على الدخول..'},
+      {pill:'✓ مقبول للدخول', cls:'ok', meta:'الباب مفتوح — اضغط دخول الدرس!'},
+      {pill:'× مرفوض', cls:'no', meta:'لا سماح لهذه الحصّة — بيانٌ واضح.'}
+    ];
+    var si = 1, idx = 0;
+    setInterval(function(){
+      idx = (idx+1) % states.length;
+      var st = states[idx];
+      doorPill.textContent = st.pill;
+      doorPill.className = 'pill ' + st.cls;
+      doorMeta.textContent = st.meta;
+    }, 4200);
+  }
+
+  /* إشعار مؤقت لروابط التحميل */
+  window.notice = function(e,msg){ e.preventDefault(); alert(msg); };
+})();
+</script>
+</body>
+</html>
