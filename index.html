@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="إلمام — منظومة تعليمية عربية للدرس الحي: تطبيق أستاذ وتطبيق تلميذ. الجدول، التنبيه، باب الدخول، الحضور في مكان واحد.">
-<title>إلمام — الأداة الأهم للدرس الحي</title>
+<title>إلمام — منظومة الدرس الحي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
@@ -292,6 +292,26 @@ footer{background:var(--deep-2);color:#9cc2ca;padding:54px 0 26px;margin-top:96p
 .phone .app-top .am.sp{background:#00906b}
 .phone .app-top .am.tc{background:#00768c}
 .app-card .bigmark,.dl-app .dm,.journey .jh .tag{background:transparent}
+
+/* ============ PREMIUM REDESIGN V2 ============ */
+:root{--primary:#087f8f;--primary-2:#24c1c8;--deep:#062f3b;--ink:#102f38;--muted:#67838a;--bg:#f5fbfc;--card:rgba(255,255,255,.88);--line:#d8ebee;--radius:28px;--shadow-sm:0 8px 26px rgba(6,47,59,.06);--shadow-md:0 20px 60px rgba(6,47,59,.11);--shadow-lg:0 35px 100px rgba(6,47,59,.18)}
+body{background:radial-gradient(circle at 85% 5%,rgba(36,193,200,.12),transparent 25rem),var(--bg);letter-spacing:-.15px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;background-image:radial-gradient(#9ac9cf .7px,transparent .7px);background-size:22px 22px;mask-image:linear-gradient(to bottom,#000,transparent 70%);z-index:-1}
+.container{width:min(1240px,90%)}
+.nav .bar{background:rgba(245,251,252,.72);backdrop-filter:blur(24px);border-bottom:1px solid rgba(216,235,238,.6)}
+.navin{height:88px}.brand-name{font-size:29px}.brand-mark{width:50px;height:50px;border-radius:18px;box-shadow:0 12px 30px rgba(8,127,143,.25)}
+.links{gap:34px}.links a{font-size:14px}.links a:hover{color:var(--primary)}
+.btn{border-radius:18px;padding:15px 28px;box-shadow:none}.btn.primary{background:linear-gradient(135deg,#087f8f,#20b9c1);box-shadow:0 14px 30px rgba(8,127,143,.22)}.btn.primary:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(8,127,143,.3)}
+.hero{position:relative;padding:95px 0 60px;overflow:hidden}.hero:before{content:"";position:absolute;width:580px;height:580px;border-radius:50%;background:radial-gradient(circle,rgba(36,193,200,.16),transparent 68%);left:-220px;top:-180px;pointer-events:none}.hero-grid{grid-template-columns:1.02fr .98fr;gap:45px;align-items:center}.eyebrow{background:rgba(255,255,255,.75);border:1px solid #d9eef0;padding:9px 14px;border-radius:999px;box-shadow:0 8px 25px rgba(6,47,59,.04);font-size:12px}.hero h1{font-size:clamp(46px,5.6vw,78px);line-height:1.18;letter-spacing:-3px;margin:24px 0 22px;font-weight:900}.hero h1 .grad{background:linear-gradient(120deg,#087f8f,#24c1c8 55%,#ff956f);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:19px;line-height:2.05;max-width:590px;color:#55747c}.hero-actions{margin-top:32px;gap:13px}.platform-note{margin-top:22px;font-size:12px;color:#78939a}.platform-note .os{background:#e8f6f7;padding:7px 11px;border-radius:999px;color:#237783}
+.stage{min-height:560px;isolation:isolate}.stage:before{content:"";position:absolute;inset:8% 4% 4%;background:linear-gradient(145deg,#e2f6f7,#fff);border:1px solid #d7edef;border-radius:48px;transform:rotate(-5deg);z-index:-2;box-shadow:var(--shadow-md)}.stage:after{content:"";position:absolute;inset:12% 9% 8%;border:1px dashed #b8dfe4;border-radius:42px;transform:rotate(7deg);z-index:-1}.phone{border:9px solid #103f49!important;border-radius:38px!important;box-shadow:0 35px 70px rgba(5,62,75,.22),0 0 0 1px rgba(255,255,255,.7);transition:transform .5s ease}.phone:hover{transform:translateY(-12px) rotate(0deg)}.phone-student{transform:rotate(-7deg) translate(-4px,16px)}.phone-teacher{transform:rotate(8deg) translate(25px,-18px)}.phone-student:hover{transform:translate(-4px,4px) rotate(-2deg)}.phone-teacher:hover{transform:translate(25px,-30px) rotate(2deg)}.screen{background:linear-gradient(180deg,#f9ffff,#edf8f9)!important}.sheet{border:1px solid #d9edef!important;box-shadow:0 8px 18px rgba(6,47,59,.045)!important;border-radius:17px!important}.big-cta{border-radius:16px!important;box-shadow:0 10px 22px rgba(8,127,143,.18)}.float-chip{border:1px solid rgba(216,235,238,.9);box-shadow:0 15px 40px rgba(6,47,59,.12)!important;border-radius:20px!important;background:rgba(255,255,255,.94)!important;backdrop-filter:blur(14px)}.hero-strip{margin-top:65px;background:rgba(255,255,255,.78);border:1px solid var(--line);border-radius:25px;padding:20px 26px;box-shadow:var(--shadow-sm);grid-template-columns:repeat(3,1fr);gap:18px}.hs{border:0!important;padding:5px 15px!important}.hs+.hs{border-right:1px solid var(--line)!important}.hs .n{font-size:30px;color:var(--primary)}.hs .t{font-size:13px}
+.section{padding:110px 0}.section.alt{background:linear-gradient(180deg,rgba(232,246,248,.52),rgba(245,251,252,.2));border-top:1px solid rgba(216,235,238,.55);border-bottom:1px solid rgba(216,235,238,.55)}.sec-head{max-width:700px;margin-bottom:42px}.sec-tag{display:inline-flex;background:#e4f6f7;color:#087f8f;border:1px solid #ccebed;padding:7px 13px;border-radius:999px;font-size:12px;font-weight:900}.sec-head h2{font-size:clamp(30px,3.8vw,49px);line-height:1.35;letter-spacing:-1.5px;margin:16px 0 12px}.sec-head p{font-size:17px;color:var(--muted);line-height:2}.grid3{gap:22px}.card{border:1px solid rgba(216,235,238,.9)!important;border-radius:26px!important;background:rgba(255,255,255,.84)!important;box-shadow:var(--shadow-sm)!important;padding:30px!important;transition:transform .35s,box-shadow .35s,border-color .35s}.card:hover{transform:translateY(-8px);box-shadow:var(--shadow-md)!important;border-color:#a9dce2!important}.icon-tile{border-radius:18px!important;width:54px!important;height:54px!important}.card h3{font-size:20px;margin:22px 0 9px}.card p{font-size:15px;color:var(--muted);line-height:2}.quote{border-radius:28px!important;background:linear-gradient(135deg,#063e4b,#087f8f)!important;box-shadow:var(--shadow-md)!important;padding:42px!important}.quote p{font-size:20px!important;line-height:2.1!important}.quote .who{color:#bce8eb!important}
+/* improved section rhythm */
+.section .grid2,.section .grid3{align-items:stretch}.feature,.app-panel,.step,.trust-item,.download-box{border-radius:26px!important;border:1px solid var(--line)!important;box-shadow:var(--shadow-sm)!important;background:rgba(255,255,255,.85)!important}.app-panel:hover,.step:hover,.trust-item:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)!important}
+footer{background:#062f3b!important;border-top:0!important}.footer-inner{padding:48px 0!important}.footer a:hover{color:#55d9df!important}
+@media(max-width:900px){.hero{padding-top:55px}.hero-grid{grid-template-columns:1fr;gap:25px}.hero h1{font-size:clamp(43px,10vw,65px);letter-spacing:-2px}.lead{font-size:17px}.stage{min-height:500px;max-width:600px;margin:auto;transform:scale(.92)}.hero-strip{grid-template-columns:1fr;gap:4px}.hs+.hs{border-right:0!important;border-top:1px solid var(--line)!important;padding-top:15px!important}.section{padding:78px 0}.links{gap:15px}}
+@media(max-width:600px){.container{width:min(92%,520px)}.navin{height:72px}.brand-name{font-size:25px}.hero-actions{flex-direction:column;align-items:stretch}.hero-actions .btn{width:100%}.stage{min-height:390px;transform:scale(.76);transform-origin:top center;margin-bottom:-100px}.phone-student{transform:rotate(-5deg) translate(-12px,20px)}.phone-teacher{transform:rotate(6deg) translate(15px,-10px)}.sec-head h2{font-size:32px}.card{padding:24px!important}.quote{padding:28px!important}.quote p{font-size:17px!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
 </style>
 </head>
 <body>
@@ -1564,10 +1584,10 @@ footer{background:var(--deep-2);color:#9cc2ca;padding:54px 0 26px;margin-top:96p
       <div class="hero-grid">
         <div>
           <span class="eyebrow"><span class="dot"></span> منظومة تعليمية عربية · تطبيقان متكاملان</span>
-          <h1>الأداة الأهم<br>للدرس <span class="grad">الحي</span></h1>
+          <h1>كل ما تحتاجه<br>لدرسٍ <span class="grad">أوضح</span></h1>
           <p class="lead">الأستاذ يفتح بابه، والتلميذ يدخل في وقته. إلمام يجمع الفوج والجدول والتنبيه والحضور والتقييم — في مكان واحد.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="#download">انضم إلى الفوج الآن
+            <a class="btn primary" href="#download">ابدأ مع إلمام
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m6-6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <a class="btn ghost" href="#story">اكتشف المشروع</a>
@@ -1894,14 +1914,14 @@ footer{background:var(--deep-2);color:#9cc2ca;padding:54px 0 26px;margin-top:96p
           </div>
         </div>
         <div class="dl-cards reveal d1">
-          <a class="dl-app" href="#" onclick="notice(event,'رابط تحميل إلمام تربوي يُضاف هنا')">
+          <a class="dl-app" href="javascript:void(0)" onclick="notice(event,'رابط تحميل إلمام تربوي يُضاف هنا')">
             <span class="dm"><svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTc"/></svg></span>
             <span><span class="t1">إلمام تربوي</span><br><span class="t2">للأستاذ · إدارة الفوج والحصص</span></span>
             <span class="go">Google Play
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </a>
-          <a class="dl-app" href="#" onclick="notice(event,'رابط تحميل إلمام تعليمي يُضاف هنا')">
+          <a class="dl-app" href="javascript:void(0)" onclick="notice(event,'رابط تحميل إلمام تعليمي يُضاف هنا')">
             <span class="dm"><svg class="mk" viewBox="0 0 136.397 134.3696" aria-hidden="true"><use href="#logoTd"/></svg></span>
             <span><span class="t1">إلمام تعليمي</span><br><span class="t2">للتلميذ · الدرس والجدول والتنبيه</span></span>
             <span class="go">Google Play
@@ -2009,6 +2029,11 @@ footer{background:var(--deep-2);color:#9cc2ca;padding:54px 0 26px;margin-top:96p
   /* إشعار مؤقت لروابط التحميل */
   window.notice = function(e,msg){ e.preventDefault(); alert(msg); };
 })();
+</script>
+
+<!-- Final polish marker: EduApp / إلمام -->
+<script>
+  document.documentElement.classList.add('final-build');
 </script>
 </body>
 </html>
